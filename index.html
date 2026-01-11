@@ -1,0 +1,2090 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Therapy Place - Social Casino Games Platform | New Zealand</title>
+    <link rel="icon" type="image/png" href="./images/favicon.png">
+    <meta name="description" content="Therapy Place Social Casino Games Platform - New Zealand's premier social casino gaming experience. Play responsibly with virtual coins only.">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    <style>
+        /* ===== THERAPY PLACE - RETRO ARCADE STYLES ===== */
+        :root {
+            --electric-red: #ff4d4d;
+            --neon-blue: #00d9ff;
+            --pixel-yellow: #ffdd55;
+            --bit-green: #55ff99;
+            --deep-black: #0a0a0a;
+            --crt-gray: #262626;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'VT323', monospace;
+            background: var(--deep-black);
+            color: var(--bit-green);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* CRT Screen Effect */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15),
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            z-index: 10000;
+            opacity: 0.3;
+        }
+
+        /* Pixel Noise Texture */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 217, 255, 0.03) 2px, rgba(0, 217, 255, 0.03) 4px),
+                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255, 77, 77, 0.03) 2px, rgba(255, 77, 77, 0.03) 4px);
+            pointer-events: none;
+            z-index: 9999;
+            animation: noise 0.2s infinite;
+        }
+
+        @keyframes noise {
+            0%, 100% { transform: translate(0, 0); }
+            10% { transform: translate(-1%, -1%); }
+            20% { transform: translate(1%, 1%); }
+            30% { transform: translate(-1%, 1%); }
+            40% { transform: translate(1%, -1%); }
+            50% { transform: translate(-1%, 0); }
+            60% { transform: translate(1%, 0); }
+            70% { transform: translate(0, -1%); }
+            80% { transform: translate(0, 1%); }
+            90% { transform: translate(-1%, -1%); }
+        }
+
+        /* Container */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header / Navbar */
+        header {
+            background: var(--crt-gray);
+            border-bottom: 4px solid var(--neon-blue);
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.5);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.2rem;
+            color: var(--pixel-yellow);
+            text-shadow: 
+                0 0 10px var(--pixel-yellow),
+                2px 2px 0 var(--electric-red),
+                4px 4px 0 var(--deep-black);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            animation: blink 2s infinite;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            height: 40px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .logo span {
+            font-size: 2rem;
+            filter: drop-shadow(0 0 10px var(--pixel-yellow));
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 10px;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.7rem;
+            color: var(--bit-green);
+            text-decoration: none;
+            padding: 10px 15px;
+            display: block;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            position: relative;
+            background: var(--deep-black);
+            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+        }
+
+        .nav-link:hover {
+            color: var(--neon-blue);
+            border-color: var(--neon-blue);
+            box-shadow: 
+                0 0 15px var(--neon-blue),
+                inset 0 0 15px rgba(0, 217, 255, 0.2);
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background: var(--neon-blue);
+            transition: width 0.3s;
+        }
+
+        .nav-link:hover::after {
+            width: 80%;
+        }
+
+        /* Dropdown Menu */
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--crt-gray);
+            border: 2px solid var(--neon-blue);
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.5);
+            min-width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s;
+            z-index: 1001;
+            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+        }
+
+        .nav-item:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            display: block;
+            padding: 12px 20px;
+            color: var(--bit-green);
+            text-decoration: none;
+            font-size: 0.7rem;
+            border-bottom: 1px solid rgba(0, 217, 255, 0.2);
+            transition: all 0.3s;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(0, 217, 255, 0.2);
+            color: var(--neon-blue);
+            padding-left: 25px;
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .mobile-toggle {
+            display: none;
+            background: var(--deep-black);
+            border: 2px solid var(--neon-blue);
+            color: var(--bit-green);
+            padding: 10px 15px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+        }
+
+        .mobile-toggle:hover {
+            box-shadow: 0 0 15px var(--neon-blue);
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            padding: 80px 0;
+            text-align: center;
+            background: radial-gradient(circle at center, rgba(0, 217, 255, 0.1) 0%, var(--deep-black) 70%);
+            overflow: hidden;
+        }
+
+        /* Pixel Particles Background */
+        .pixel-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+        }
+
+        .pixel-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--neon-blue);
+            animation: floatUp 10s infinite linear;
+            opacity: 0.6;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100px) translateX(50px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .jackpot-machine {
+            position: relative;
+            display: inline-block;
+            padding: 40px;
+            background: var(--crt-gray);
+            border: 4px solid var(--electric-red);
+            box-shadow: 
+                0 0 30px var(--electric-red),
+                inset 0 0 30px rgba(255, 77, 77, 0.2);
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+            margin-bottom: 30px;
+            animation: crtFlicker 3s infinite;
+        }
+
+        @keyframes crtFlicker {
+            0%, 100% { opacity: 1; }
+            99.5% { opacity: 1; }
+            99.6% { opacity: 0.98; }
+            99.7% { opacity: 1; }
+            99.8% { opacity: 0.99; }
+            99.9% { opacity: 1; }
+        }
+
+        .insert-coin {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1rem;
+            color: var(--pixel-yellow);
+            text-shadow: 
+                0 0 15px var(--pixel-yellow),
+                2px 2px 0 var(--deep-black);
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .jackpot-title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.8rem;
+            color: var(--bit-green);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px var(--bit-green);
+        }
+
+        .jackpot-amount {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 2.5rem;
+            color: var(--electric-red);
+            text-shadow: 
+                0 0 20px var(--electric-red),
+                3px 3px 0 var(--deep-black),
+                6px 6px 0 var(--pixel-yellow);
+            margin-bottom: 20px;
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 
+                    0 0 20px var(--electric-red),
+                    3px 3px 0 var(--deep-black),
+                    6px 6px 0 var(--pixel-yellow);
+            }
+            to {
+                text-shadow: 
+                    0 0 30px var(--electric-red),
+                    0 0 40px var(--electric-red),
+                    3px 3px 0 var(--deep-black),
+                    6px 6px 0 var(--pixel-yellow);
+            }
+        }
+
+        /* Pixel Buttons */
+        .pixel-btn {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.7rem;
+            padding: 15px 30px;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            position: relative;
+            margin: 10px;
+            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+        }
+
+        .pixel-btn-primary {
+            background: var(--electric-red);
+            color: var(--deep-black);
+            border: 3px solid var(--pixel-yellow);
+            box-shadow: 
+                0 0 20px var(--electric-red),
+                4px 4px 0 var(--deep-black);
+        }
+
+        .pixel-btn-primary:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 
+                0 0 30px var(--electric-red),
+                6px 6px 0 var(--deep-black);
+            animation: pixelBurst 0.5s;
+        }
+
+        .pixel-btn-secondary {
+            background: var(--neon-blue);
+            color: var(--deep-black);
+            border: 3px solid var(--bit-green);
+            box-shadow: 
+                0 0 20px var(--neon-blue),
+                4px 4px 0 var(--deep-black);
+        }
+
+        .pixel-btn-secondary:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 
+                0 0 30px var(--neon-blue),
+                6px 6px 0 var(--deep-black);
+        }
+
+        @keyframes pixelBurst {
+            0%, 100% { transform: translate(-2px, -2px); }
+            25% { transform: translate(-3px, -3px) scale(1.02); }
+            50% { transform: translate(-1px, -1px) scale(0.98); }
+            75% { transform: translate(-3px, -3px) scale(1.01); }
+        }
+
+        /* Sections */
+        .section {
+            padding: 60px 0;
+            position: relative;
+        }
+
+        .section-title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.5rem;
+            color: var(--pixel-yellow);
+            text-align: center;
+            margin-bottom: 40px;
+            text-shadow: 
+                0 0 15px var(--pixel-yellow),
+                3px 3px 0 var(--deep-black);
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .section-title::before,
+        .section-title::after {
+            content: '▓▓▓';
+            color: var(--neon-blue);
+            margin: 0 20px;
+        }
+
+        /* Game Grid */
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .game-card {
+            background: var(--crt-gray);
+            border: 3px solid var(--neon-blue);
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(0, 217, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s;
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 
+                0 0 30px var(--neon-blue),
+                0 10px 40px rgba(0, 217, 255, 0.3);
+            border-color: var(--bit-green);
+        }
+
+        .game-card:hover::before {
+            animation: scan 1s infinite;
+        }
+
+        @keyframes scan {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .game-icon {
+            font-size: 4rem;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 0 10px currentColor);
+            display: block;
+        }
+
+        .game-title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.9rem;
+            color: var(--bit-green);
+            margin-bottom: 10px;
+        }
+
+        .game-description {
+            font-size: 1.1rem;
+            color: rgba(85, 255, 153, 0.7);
+            line-height: 1.6;
+        }
+
+        /* Features Section */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .feature-card {
+            background: var(--crt-gray);
+            border: 2px solid var(--bit-green);
+            padding: 30px;
+            text-align: center;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            border-color: var(--pixel-yellow);
+            box-shadow: 0 0 25px var(--pixel-yellow);
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            display: block;
+            animation: float 3s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Ticker */
+        .ticker-wrap {
+            background: var(--crt-gray);
+            border-top: 3px solid var(--electric-red);
+            border-bottom: 3px solid var(--electric-red);
+            padding: 15px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+        }
+
+        .ticker {
+            display: inline-block;
+            animation: tickerScroll 30s linear infinite;
+            color: var(--bit-green);
+            font-size: 1.1rem;
+        }
+
+        @keyframes tickerScroll {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .ticker-item {
+            display: inline-block;
+            margin-right: 50px;
+            text-shadow: 0 0 10px currentColor;
+        }
+
+        .ticker-item b {
+            color: var(--pixel-yellow);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--crt-gray);
+            border-top: 4px solid var(--neon-blue);
+            padding: 40px 0 20px;
+            margin-top: 60px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h4 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.7rem;
+            color: var(--pixel-yellow);
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px var(--pixel-yellow);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links a {
+            display: block;
+            color: var(--bit-green);
+            text-decoration: none;
+            padding: 8px 0;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            border-bottom: 1px solid transparent;
+        }
+
+        .footer-links a:hover {
+            color: var(--neon-blue);
+            padding-left: 10px;
+            text-shadow: 0 0 10px var(--neon-blue);
+            border-bottom-color: var(--neon-blue);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 2px solid rgba(0, 217, 255, 0.3);
+            color: rgba(85, 255, 153, 0.7);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .jackpot-amount {
+                font-size: 2rem;
+            }
+            .section-title {
+                font-size: 1.2rem;
+            }
+            .stats-grid,
+            .winners-grid,
+            .testimonials-grid,
+            .promo-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+        }
+
+        @media (max-width: 992px) {
+            .navbar {
+                flex-wrap: wrap;
+            }
+            
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                background: var(--crt-gray);
+                flex-direction: column;
+                padding: 20px;
+                border-bottom: 4px solid var(--neon-blue);
+                transition: left 0.3s ease;
+                z-index: 999;
+                max-height: calc(100vh - 70px);
+                overflow-y: auto;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .mobile-toggle {
+                display: block;
+            }
+
+            .nav-item {
+                width: 100%;
+            }
+
+            .nav-link {
+                display: block;
+                width: 100%;
+                text-align: left;
+            }
+
+            .dropdown-menu {
+                position: static;
+                transform: none;
+                opacity: 1;
+                visibility: visible;
+                display: none;
+                margin-top: 10px;
+                margin-left: 20px;
+                border: 2px solid var(--neon-blue);
+                background: var(--deep-black);
+                box-shadow: none;
+            }
+
+            .nav-item.active .dropdown-menu {
+                display: block;
+            }
+
+            .dropdown-item {
+                padding: 15px 20px;
+                border-bottom: 1px solid rgba(0, 217, 255, 0.3);
+            }
+
+            .jackpot-amount {
+                font-size: 1.8rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .winners-grid,
+            .testimonials-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 0.9rem;
+            }
+
+            .logo span {
+                font-size: 1.8rem;
+            }
+
+            .jackpot-machine {
+                padding: 25px;
+            }
+
+            .jackpot-amount {
+                font-size: 1.5rem;
+            }
+
+            .insert-coin {
+                font-size: 0.8rem;
+            }
+
+            .pixel-btn {
+                font-size: 0.6rem;
+                padding: 12px 20px;
+            }
+
+            .section-title {
+                font-size: 1rem;
+            }
+
+            .game-grid,
+            .features-grid,
+            .stats-grid,
+            .winners-grid,
+            .testimonials-grid,
+            .promo-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .newsletter-input {
+                width: 100%;
+                min-width: auto;
+            }
+
+            .newsletter-box {
+                padding: 30px 20px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .hero {
+                padding: 30px 0;
+            }
+
+            .jackpot-amount {
+                font-size: 1.3rem;
+            }
+
+            .section {
+                padding: 30px 0;
+            }
+
+            .jackpot-machine {
+                padding: 20px 15px;
+            }
+
+            .stat-number {
+                font-size: 1.5rem;
+            }
+
+            .stat-icon {
+                font-size: 2.5rem;
+            }
+
+            .testimonial-quote {
+                font-size: 1.1rem;
+            }
+
+            .promo-icon {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 0.7rem;
+            }
+
+            .logo span {
+                font-size: 1.5rem;
+            }
+
+            .jackpot-machine {
+                padding: 20px 10px;
+            }
+
+            .jackpot-amount {
+                font-size: 1.2rem;
+            }
+
+            .insert-coin {
+                font-size: 0.7rem;
+            }
+
+            .pixel-btn {
+                display: block;
+                width: 100%;
+                margin: 10px 0;
+                font-size: 0.55rem;
+                padding: 10px 15px;
+            }
+
+            .section-title {
+                font-size: 0.9rem;
+            }
+
+            .stat-number {
+                font-size: 1.3rem;
+            }
+
+            .stat-icon {
+                font-size: 2rem;
+            }
+
+            .game-icon,
+            .feature-icon {
+                font-size: 3rem;
+            }
+
+            .newsletter-box {
+                padding: 25px 15px;
+            }
+
+            .back-to-top {
+                width: 45px;
+                height: 45px;
+                bottom: 20px;
+                right: 20px;
+                font-size: 1.3rem;
+            }
+        }
+
+        @media (max-width: 320px) {
+            .logo {
+                font-size: 0.6rem;
+            }
+
+            .logo span {
+                font-size: 1.3rem;
+            }
+
+            .container {
+                padding: 0 10px;
+            }
+
+            .jackpot-machine {
+                padding: 15px 8px;
+            }
+
+            .jackpot-amount {
+                font-size: 1rem;
+            }
+
+            .pixel-btn {
+                font-size: 0.5rem;
+                padding: 8px 12px;
+            }
+
+            .section-title {
+                font-size: 0.8rem;
+            }
+
+            .nav-menu {
+                padding: 15px;
+            }
+
+            .nav-link {
+                font-size: 0.6rem;
+                padding: 8px 12px;
+            }
+
+            .dropdown-item {
+                font-size: 0.6rem;
+                padding: 12px 15px;
+            }
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--electric-red);
+            color: var(--deep-black);
+            border: 3px solid var(--pixel-yellow);
+            width: 50px;
+            height: 50px;
+            border-radius: 0;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            z-index: 999;
+            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+            box-shadow: 0 0 20px var(--electric-red);
+            transition: all 0.3s;
+        }
+
+        .back-to-top:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: 0 0 30px var(--electric-red);
+        }
+
+        .back-to-top.show {
+            display: flex;
+        }
+
+        /* Statistics Section */
+        .stats-section {
+            background: var(--crt-gray);
+            border-top: 4px solid var(--electric-red);
+            border-bottom: 4px solid var(--electric-red);
+            padding: 50px 0;
+            margin-top: 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .stat-card {
+            background: var(--deep-black);
+            border: 3px solid var(--pixel-yellow);
+            padding: 30px;
+            text-align: center;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 25px var(--pixel-yellow);
+        }
+
+        .stat-number {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 2rem;
+            color: var(--pixel-yellow);
+            text-shadow: 0 0 15px var(--pixel-yellow);
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: rgba(85, 255, 153, 0.8);
+        }
+
+        .stat-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            display: block;
+            filter: drop-shadow(0 0 10px currentColor);
+        }
+
+        /* Latest Winners Section */
+        .winners-section {
+            background: rgba(255, 77, 77, 0.05);
+        }
+
+        .winners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .winner-card {
+            background: var(--crt-gray);
+            border: 3px solid var(--electric-red);
+            padding: 25px;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .winner-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 30px var(--electric-red);
+            border-color: var(--pixel-yellow);
+        }
+
+        .winner-avatar {
+            width: 60px;
+            height: 60px;
+            background: var(--electric-red);
+            border: 3px solid var(--pixel-yellow);
+            margin: 0 auto 15px;
+            clip-path: polygon(0 0, calc(100% - 5px) 0, 100% 5px, 100% 100%, 5px 100%, 0 calc(100% - 5px));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        .winner-name {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.8rem;
+            color: var(--bit-green);
+            margin-bottom: 10px;
+        }
+
+        .winner-amount {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.9rem;
+            color: var(--pixel-yellow);
+            text-shadow: 0 0 10px var(--pixel-yellow);
+            margin-bottom: 10px;
+        }
+
+        .winner-game {
+            font-size: 1rem;
+            color: rgba(85, 255, 153, 0.7);
+        }
+
+        /* Testimonials Section */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .testimonial-card {
+            background: var(--crt-gray);
+            border: 3px solid var(--neon-blue);
+            padding: 30px;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 30px var(--neon-blue);
+            border-color: var(--bit-green);
+        }
+
+        .testimonial-quote {
+            font-size: 1.2rem;
+            color: rgba(85, 255, 153, 0.9);
+            line-height: 1.8;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .testimonial-avatar {
+            width: 50px;
+            height: 50px;
+            background: var(--neon-blue);
+            border: 2px solid var(--bit-green);
+            clip-path: polygon(0 0, calc(100% - 5px) 0, 100% 5px, 100% 100%, 5px 100%, 0 calc(100% - 5px));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .testimonial-info h4 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.7rem;
+            color: var(--pixel-yellow);
+            margin-bottom: 5px;
+        }
+
+        .testimonial-info p {
+            font-size: 1rem;
+            color: rgba(85, 255, 153, 0.7);
+        }
+
+        .testimonial-rating {
+            color: var(--pixel-yellow);
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+
+        /* Newsletter Section */
+        .newsletter-box {
+            background: var(--crt-gray);
+            border: 4px solid var(--pixel-yellow);
+            padding: 50px 40px;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+            max-width: 700px;
+            margin: 40px auto 0;
+            text-align: center;
+            box-shadow: 0 0 40px rgba(255, 221, 85, 0.3);
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            min-width: 250px;
+            padding: 15px 20px;
+            background: var(--deep-black);
+            border: 3px solid var(--neon-blue);
+            color: var(--bit-green);
+            font-family: 'VT323', monospace;
+            font-size: 1.2rem;
+            clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+            transition: all 0.3s;
+        }
+
+        .newsletter-input:focus {
+            outline: none;
+            border-color: var(--pixel-yellow);
+            box-shadow: 0 0 20px var(--pixel-yellow);
+        }
+
+        .newsletter-input::placeholder {
+            color: rgba(85, 255, 153, 0.5);
+        }
+
+        /* Promotions Section */
+        .promo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .promo-card {
+            background: var(--crt-gray);
+            border: 4px solid var(--electric-red);
+            padding: 30px;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .promo-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 0 40px var(--electric-red);
+            border-color: var(--pixel-yellow);
+        }
+
+        .promo-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--pixel-yellow);
+            color: var(--deep-black);
+            padding: 8px 15px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.6rem;
+            clip-path: polygon(0 0, calc(100% - 5px) 0, 100% 5px, 100% 100%, 5px 100%, 0 calc(100% - 5px));
+            animation: blink 2s infinite;
+        }
+
+        .promo-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            display: block;
+            filter: drop-shadow(0 0 15px currentColor);
+        }
+
+        .promo-title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1rem;
+            color: var(--bit-green);
+            margin-bottom: 15px;
+        }
+
+        .promo-description {
+            font-size: 1.2rem;
+            color: rgba(85, 255, 153, 0.8);
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .promo-code {
+            background: var(--deep-black);
+            border: 2px solid var(--pixel-yellow);
+            padding: 10px 20px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.8rem;
+            color: var(--pixel-yellow);
+            display: inline-block;
+            margin: 10px 0;
+            clip-path: polygon(0 0, calc(100% - 5px) 0, 100% 5px, 100% 100%, 5px 100%, 0 calc(100% - 5px));
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .stat-number {
+                font-size: 1.5rem;
+            }
+            .newsletter-form {
+                flex-direction: column;
+            }
+            .newsletter-input {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .stat-number {
+                font-size: 1.3rem;
+            }
+        }
+        /* Age Verification Modal */
+        .age-modal-overlay,
+        .cookie-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10001;
+        }
+
+        .age-modal,
+        .cookie-modal {
+            background: var(--crt-gray);
+            border: 4px solid var(--pixel-yellow);
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+            box-shadow: 0 0 40px var(--pixel-yellow);
+        }
+
+        .age-modal h2,
+        .cookie-modal h2 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1rem;
+            color: var(--pixel-yellow);
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px var(--pixel-yellow);
+        }
+
+        .age-modal .warning-icon,
+        .cookie-modal .cookie-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 15px var(--pixel-yellow));
+        }
+
+        .age-modal p,
+        .cookie-modal p {
+            font-size: 1.2rem;
+            color: var(--bit-green);
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        .age-modal .question,
+        .cookie-modal .question {
+            font-size: 1.3rem;
+            color: var(--neon-blue);
+            margin: 25px 0;
+            font-weight: bold;
+        }
+
+        .age-modal-buttons,
+        .cookie-modal-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .age-btn-yes,
+        .cookie-btn-accept {
+            background: var(--electric-red);
+            color: var(--deep-black);
+            border: 3px solid var(--pixel-yellow);
+            padding: 15px 30px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.7rem;
+            cursor: pointer;
+            clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+            transition: all 0.3s;
+            box-shadow: 0 0 20px var(--electric-red);
+        }
+
+        .age-btn-yes:hover,
+        .cookie-btn-accept:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px var(--electric-red);
+        }
+
+        .age-btn-no,
+        .cookie-btn-decline {
+            background: var(--deep-black);
+            color: var(--bit-green);
+            border: 3px solid var(--neon-blue);
+            padding: 15px 30px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.7rem;
+            cursor: pointer;
+            clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+            transition: all 0.3s;
+        }
+
+        .age-btn-no:hover,
+        .cookie-btn-decline:hover {
+            background: var(--neon-blue);
+            color: var(--deep-black);
+            box-shadow: 0 0 20px var(--neon-blue);
+        }
+
+        .age-modal-overlay.hidden,
+        .cookie-modal-overlay.hidden {
+            display: none;
+        }
+
+        @media (max-width: 480px) {
+            .age-modal,
+            .cookie-modal {
+                padding: 25px 20px;
+            }
+
+            .age-modal h2,
+            .cookie-modal h2 {
+                font-size: 0.8rem;
+            }
+
+            .age-modal p,
+            .cookie-modal p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Age Verification Modal -->
+    <div class="age-modal-overlay" id="ageModal">
+        <div class="age-modal">
+            <div class="warning-icon">⚠️</div>
+            <h2>AGE VERIFICATION</h2>
+            <p>You must be 18 years or older to access this Social Casino Games platform.</p>
+            <p>This platform is for entertainment purposes only. Virtual coins only.</p>
+            <div class="question">Are you 18 years or older?</div>
+            <div class="age-modal-buttons">
+                <button class="age-btn-yes" onclick="confirmAge()">YES, I AM 18+</button>
+                <button class="age-btn-no" onclick="denyAge()">NO, I AM UNDER 18</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cookie Policy Modal -->
+    <div class="cookie-modal-overlay hidden" id="cookieModal">
+        <div class="cookie-modal">
+            <div class="cookie-icon">🍪</div>
+            <h2>COOKIE POLICY</h2>
+            <p>We use cookies to enhance your experience, analyze site usage, and assist in our marketing efforts. By clicking 'Accept', you consent to our use of cookies.</p>
+            <p>You can learn more about our cookie policy in our <a href="privacy.html" style="color: var(--neon-blue); text-decoration: underline;">Privacy Policy</a>.</p>
+            <div class="cookie-modal-buttons">
+                <button class="cookie-btn-accept" onclick="acceptCookies()">ACCEPT</button>
+                <button class="cookie-btn-decline" onclick="declineCookies()">DECLINE</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container navbar">
+            <a href="index.html" class="logo">
+                <img src="./images/logo.png" alt="Therapy Place Logo" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+                <span style="display: none;">🎰</span>
+                <span>THERAPY PLACE</span>
+            </a>
+            <button class="mobile-toggle" onclick="toggleMobileMenu()">☰</button>
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item" onclick="toggleDropdown(event, this)">
+                    <a href="games.html" class="nav-link" onclick="if(window.innerWidth <= 992) {event.preventDefault(); toggleDropdown(event, this.parentElement);}">Games ▾</a>
+                    <div class="dropdown-menu">
+                        <a href="slots.html" class="dropdown-item">🎰 Slots</a>
+                        <a href="live-tournaments.html" class="dropdown-item">⚔ Live Tournaments</a>
+                    </div>
+                </li>
+                <li class="nav-item"><a href="store.html" class="nav-link">Retro Store</a></li>
+                <li class="nav-item"><a href="tournaments.html" class="nav-link">Tournaments</a></li>
+                <li class="nav-item"><a href="leaderboard.html" class="nav-link">Leaderboard</a></li>
+                <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="pixel-particles" id="particles"></div>
+        <div class="container">
+            <div class="jackpot-machine">
+                <div class="insert-coin">INSERT COIN TO BEGIN</div>
+                <div class="jackpot-title">MEGA JACKPOT</div>
+                <div class="jackpot-amount" id="jackpotAmount">$999,999</div>
+                <div style="margin-top: 30px;">
+                    <button class="pixel-btn pixel-btn-primary" onclick="window.location.href='games.html'">PLAY NOW</button>
+                    <button class="pixel-btn pixel-btn-secondary" onclick="window.location.href='tournaments.html'">JOIN TOURNAMENT</button>
+                    <button class="pixel-btn pixel-btn-primary" onclick="window.location.href='store.html'">VISIT STORE</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ticker -->
+    <div class="ticker-wrap">
+        <div class="ticker" id="ticker">
+            <span class="ticker-item">🎉 <b>NEW PLAYER BONUS:</b> 10,000 COINS FREE! Use code: WELCOME2026</span>
+            <span class="ticker-item">🏆 <b>TOURNAMENT LIVE:</b> Pixel Battle Royale - Prize Pool: 1,000,000 Coins</span>
+            <span class="ticker-item">🛒 <b>STORE SALE:</b> 50% OFF All Avatar Skins This Week!</span>
+            <span class="ticker-item">⭐ <b>LEADER:</b> PixelMaster99 just won 500,000 coins!</span>
+        </div>
+    </div>
+
+    <!-- Statistics Section -->
+    <section class="stats-section">
+        <div class="container">
+            <h2 class="section-title" style="margin-bottom: 30px;">PLATFORM STATISTICS</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-icon" style="color: var(--electric-red);">👥</span>
+                    <span class="stat-number" id="totalPlayers">125,678</span>
+                    <span class="stat-label">Total Players</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon" style="color: var(--neon-blue);">🎮</span>
+                    <span class="stat-number" id="totalGames">50+</span>
+                    <span class="stat-label">Games Available</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon" style="color: var(--pixel-yellow);">💰</span>
+                    <span class="stat-number" id="totalPrizes">25M+</span>
+                    <span class="stat-label">Coins Won</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon" style="color: var(--bit-green);">🏆</span>
+                    <span class="stat-number" id="totalTournaments">1,234</span>
+                    <span class="stat-label">Tournaments Hosted</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon" style="color: var(--electric-red);">⭐</span>
+                    <span class="stat-number" id="activeNow">8,456</span>
+                    <span class="stat-label">Players Online</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon" style="color: var(--neon-blue);">🎯</span>
+                    <span class="stat-number" id="dailyWinners">567</span>
+                    <span class="stat-label">Daily Winners</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Games Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">POPULAR GAMES</h2>
+            <p style="text-align: center; font-size: 1.2rem; color: rgba(85, 255, 153, 0.7); margin-bottom: 40px;">
+                Discover our amazing collection of retro arcade games!
+            </p>
+            <div class="game-grid">
+                <div class="game-card" onclick="window.location.href='slots.html'">
+                    <span class="game-icon" style="color: var(--electric-red);">🎰</span>
+                    <h3 class="game-title">Pixel Slots</h3>
+                    <p class="game-description">Classic 8-bit slot machines with retro sound effects and pixel art animations. Spin the reels and win big jackpots!</p>
+                </div>
+                <div class="game-card" onclick="window.location.href='games.html'">
+                    <span class="game-icon" style="color: var(--neon-blue);">🃏</span>
+                    <h3 class="game-title">Arcade Poker</h3>
+                    <p class="game-description">Vintage poker game with pixel deck cards and arcade-style gameplay. Test your skills against other players!</p>
+                </div>
+                <div class="game-card" onclick="window.location.href='games.html'">
+                    <span class="game-icon" style="color: var(--pixel-yellow);">🃑</span>
+                    <h3 class="game-title">Pixel Blackjack</h3>
+                    <p class="game-description">Retro blackjack with CRT screen effects and authentic arcade feel. Beat the dealer and win coins!</p>
+                </div>
+                <div class="game-card" onclick="window.location.href='games.html'">
+                    <span class="game-icon" style="color: var(--bit-green);">🎲</span>
+                    <h3 class="game-title">Pixel Roulette</h3>
+                    <p class="game-description">Classic roulette game with pixel art design. Place your bets and watch the wheel spin in retro style!</p>
+                </div>
+                <div class="game-card" onclick="window.location.href='games.html'">
+                    <span class="game-icon" style="color: var(--electric-red);">🎯</span>
+                    <h3 class="game-title">Arcade Dice</h3>
+                    <p class="game-description">Test your luck with our pixel dice games. Roll the dice and win big prizes in this classic arcade game!</p>
+                </div>
+                <div class="game-card" onclick="window.location.href='games.html'">
+                    <span class="game-icon" style="color: var(--neon-blue);">🎴</span>
+                    <h3 class="game-title">Pixel Baccarat</h3>
+                    <p class="game-description">Elegant baccarat game with pixel art graphics. Experience this classic card game in retro style!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Latest Winners Section -->
+    <section class="section winners-section">
+        <div class="container">
+            <h2 class="section-title">🏆 LATEST WINNERS</h2>
+            <p style="text-align: center; font-size: 1.2rem; color: rgba(85, 255, 153, 0.7); margin-bottom: 40px;">
+                Check out our recent big winners!
+            </p>
+            <div class="winners-grid">
+                <div class="winner-card">
+                    <div class="winner-avatar">👤</div>
+                    <div class="winner-name">PixelMaster99</div>
+                    <div class="winner-amount">500,000 COINS</div>
+                    <div class="winner-game">🎰 Pixel Slots</div>
+                </div>
+                <div class="winner-card">
+                    <div class="winner-avatar">👤</div>
+                    <div class="winner-name">ArcadeKing</div>
+                    <div class="winner-amount">375,000 COINS</div>
+                    <div class="winner-game">🃏 Arcade Poker</div>
+                </div>
+                <div class="winner-card">
+                    <div class="winner-avatar">👤</div>
+                    <div class="winner-name">SlotQueen</div>
+                    <div class="winner-amount">250,000 COINS</div>
+                    <div class="winner-game">🎰 Pixel Slots</div>
+                </div>
+                <div class="winner-card">
+                    <div class="winner-avatar">👤</div>
+                    <div class="winner-name">RetroGamer</div>
+                    <div class="winner-amount">425,000 COINS</div>
+                    <div class="winner-game">🃑 Pixel Blackjack</div>
+                </div>
+                <div class="winner-card">
+                    <div class="winner-avatar">👤</div>
+                    <div class="winner-name">PokerPro</div>
+                    <div class="winner-amount">300,000 COINS</div>
+                    <div class="winner-game">🃏 Arcade Poker</div>
+                </div>
+                <div class="winner-card">
+                    <div class="winner-avatar">👤</div>
+                    <div class="winner-name">JackpotJunkie</div>
+                    <div class="winner-amount">600,000 COINS</div>
+                    <div class="winner-game">🎰 Pixel Slots</div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 40px;">
+                <button class="pixel-btn pixel-btn-primary" onclick="window.location.href='leaderboard.html'">VIEW FULL LEADERBOARD</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section" style="background: rgba(0, 217, 255, 0.05);">
+        <div class="container">
+            <h2 class="section-title">WHY CHOOSE THERAPY PLACE</h2>
+            <p style="text-align: center; font-size: 1.2rem; color: rgba(85, 255, 153, 0.7); margin-bottom: 40px;">
+                Experience the ultimate retro gaming platform!
+            </p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="feature-icon" style="color: var(--electric-red);">🎮</span>
+                    <h3 class="game-title">Retro Arcade Experience</h3>
+                    <p class="game-description">Immerse yourself in the nostalgic world of classic arcade games with authentic 8-bit graphics and sounds. Feel like you're back in the 80s!</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon" style="color: var(--neon-blue);">🏆</span>
+                    <h3 class="game-title">Live Tournaments</h3>
+                    <p class="game-description">Compete in real-time tournaments with players worldwide. Win massive coin prizes and climb the leaderboard to become a legend!</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon" style="color: var(--pixel-yellow);">🛒</span>
+                    <h3 class="game-title">Retro Store</h3>
+                    <p class="game-description">Customize your avatar with pixel art skins, unlock special effects, and purchase exclusive retro items. Show off your unique style!</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon" style="color: var(--bit-green);">💰</span>
+                    <h3 class="game-title">Daily Rewards</h3>
+                    <p class="game-description">Log in every day to claim free coins, bonus spins, and special pixel art collectibles. The longer your streak, the bigger the rewards!</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon" style="color: var(--electric-red);">👥</span>
+                    <h3 class="game-title">Social Features</h3>
+                    <p class="game-description">Connect with friends, send gifts, and participate in multiplayer arcade sessions. Build your pixel gaming community and compete together!</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon" style="color: var(--neon-blue);">🔒</span>
+                    <h3 class="game-title">Secure & Fair</h3>
+                    <p class="game-description">All games use certified random number generators. Your virtual coins and progress are safely stored and protected with industry-standard security.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon" style="color: var(--pixel-yellow);">🎨</span>
+                    <h3 class="game-title">Pixel Art Design</h3>
+                    <p class="game-description">Every element is crafted with pixel art precision. Experience the authentic retro gaming atmosphere with detailed 8-bit graphics!</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon" style="color: var(--bit-green);">⚡</span>
+                    <h3 class="game-title">Fast Performance</h3>
+                    <p class="game-description">Lightning-fast loading times and smooth animations. Enjoy seamless gaming experience across all devices without lag or delays!</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon" style="color: var(--electric-red);">📱</span>
+                    <h3 class="game-title">Mobile Friendly</h3>
+                    <p class="game-description">Play anywhere, anytime! Our platform is fully optimized for mobile devices. Take your favorite games with you on the go!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Promotions Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">🎁 SPECIAL PROMOTIONS</h2>
+            <p style="text-align: center; font-size: 1.2rem; color: rgba(85, 255, 153, 0.7); margin-bottom: 40px;">
+                Don't miss out on these amazing offers!
+            </p>
+            <div class="promo-grid">
+                <div class="promo-card">
+                    <div class="promo-badge">NEW</div>
+                    <span class="promo-icon" style="color: var(--electric-red);">🎉</span>
+                    <h3 class="promo-title">WELCOME BONUS</h3>
+                    <p class="promo-description">New players receive 10,000 FREE coins just for signing up! Start your pixel gaming journey with a huge bonus.</p>
+                    <div class="promo-code">Code: WELCOME2026</div>
+                    <button class="pixel-btn pixel-btn-primary" style="margin-top: 15px; font-size: 0.6rem; padding: 10px 20px;" onclick="alert('Welcome bonus activated! 10,000 coins added to your account!')">CLAIM NOW</button>
+                </div>
+                <div class="promo-card">
+                    <div class="promo-badge">HOT</div>
+                    <span class="promo-icon" style="color: var(--pixel-yellow);">🔥</span>
+                    <h3 class="promo-title">DAILY LOGIN REWARD</h3>
+                    <p class="promo-description">Log in every day and claim increasing rewards! Day 1: 1,000 coins, Day 7: 10,000 coins, Day 30: 100,000 coins!</p>
+                    <div class="promo-code">Daily Bonus Active</div>
+                    <button class="pixel-btn pixel-btn-primary" style="margin-top: 15px; font-size: 0.6rem; padding: 10px 20px;" onclick="alert('Daily reward claimed! Check your account!')">CLAIM TODAY</button>
+                </div>
+                <div class="promo-card">
+                    <div class="promo-badge">SALE</div>
+                    <span class="promo-icon" style="color: var(--neon-blue);">🛒</span>
+                    <h3 class="promo-title">STORE SALE - 50% OFF</h3>
+                    <p class="promo-description">All avatar skins and pixel art items are 50% OFF this week! Customize your character with amazing retro designs at half price!</p>
+                    <div class="promo-code">Code: STORE50</div>
+                    <button class="pixel-btn pixel-btn-primary" style="margin-top: 15px; font-size: 0.6rem; padding: 10px 20px;" onclick="window.location.href='store.html'">SHOP NOW</button>
+                </div>
+                <div class="promo-card">
+                    <div class="promo-badge">LIVE</div>
+                    <span class="promo-icon" style="color: var(--bit-green);">⚔</span>
+                    <h3 class="promo-title">TOURNAMENT PRIZE BOOST</h3>
+                    <p class="promo-description">All tournament prize pools are doubled this month! Compete in tournaments and win twice the coins. Limited time offer!</p>
+                    <div class="promo-code">2x Prize Pools</div>
+                    <button class="pixel-btn pixel-btn-primary" style="margin-top: 15px; font-size: 0.6rem; padding: 10px 20px;" onclick="window.location.href='tournaments.html'">JOIN NOW</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="section" style="background: rgba(255, 77, 77, 0.05);">
+        <div class="container">
+            <h2 class="section-title">⭐ PLAYER TESTIMONIALS</h2>
+            <p style="text-align: center; font-size: 1.2rem; color: rgba(85, 255, 153, 0.7); margin-bottom: 40px;">
+                See what our players are saying!
+            </p>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                    <p class="testimonial-quote">"PixelJackpot brings back all the nostalgia of classic arcade games! The pixel art design is amazing and the games are super fun. I love the retro feel!"</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">👤</div>
+                        <div class="testimonial-info">
+                            <h4>PixelMaster99</h4>
+                            <p>Top Player</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                    <p class="testimonial-quote">"The tournaments are intense and exciting! I've won so many coins and the community is really friendly. Best retro gaming platform ever!"</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">👤</div>
+                        <div class="testimonial-info">
+                            <h4>ArcadeKing</h4>
+                            <p>Tournament Winner</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                    <p class="testimonial-quote">"Daily rewards keep me coming back every day! The retro store has awesome pixel art items. I've customized my avatar exactly how I wanted!"</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">👤</div>
+                        <div class="testimonial-info">
+                            <h4>SlotQueen</h4>
+                            <p>Daily Player</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="section" style="background: rgba(255, 221, 85, 0.05);">
+        <div class="container">
+            <div class="newsletter-box">
+                <h3 style="font-family: 'Press Start 2P', cursive; font-size: 1rem; color: var(--pixel-yellow); margin-bottom: 20px; text-shadow: 0 0 15px var(--pixel-yellow);">
+                    📧 SUBSCRIBE TO NEWSLETTER
+                </h3>
+                <p style="font-size: 1.2rem; color: rgba(85, 255, 153, 0.8); margin-bottom: 30px;">
+                    Get the latest updates, promotions, and tournament announcements delivered to your inbox!
+                </p>
+                <form class="newsletter-form" id="newsletterForm" onsubmit="handleNewsletter(event); return false;">
+                    <input type="email" class="newsletter-input" placeholder="Enter your email address" required id="newsletterEmail">
+                    <button type="submit" class="pixel-btn pixel-btn-primary" style="min-width: 150px;">SUBSCRIBE</button>
+                </form>
+                <p id="newsletterMessage" style="margin-top: 20px; font-size: 1.1rem; color: var(--bit-green); display: none;"></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Preview Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">FREQUENTLY ASKED QUESTIONS</h2>
+            <p style="text-align: center; font-size: 1.2rem; color: rgba(85, 255, 153, 0.7); margin-bottom: 40px;">
+                Find answers to commonly asked questions
+            </p>
+            <div class="features-grid" style="grid-template-columns: 1fr;">
+                <div class="feature-card" style="text-align: left; max-width: 900px; margin: 0 auto;">
+                    <h3 class="game-title" style="color: var(--pixel-yellow); margin-bottom: 15px;">❓ What is PixelJackpot?</h3>
+                    <p class="game-description" style="margin-bottom: 30px;">
+                        PixelJackpot is a retro pixel-art online casino platform that combines classic 8-bit arcade aesthetics with modern social gaming features. We offer virtual coin gaming with no real money involved. Experience the nostalgia of classic arcade games with authentic pixel art graphics, CRT screen effects, and retro sound design.
+                    </p>
+                    <h3 class="game-title" style="color: var(--pixel-yellow); margin-bottom: 15px;">🎮 How do I get started?</h3>
+                    <p class="game-description" style="margin-bottom: 30px;">
+                        Getting started is easy! Simply click "PLAY NOW" on the homepage and start playing immediately. New players receive 10,000 free coins as a welcome bonus. No registration required for basic gameplay, but creating an account allows you to save your progress, compete on leaderboards, and participate in tournaments.
+                    </p>
+                    <h3 class="game-title" style="color: var(--pixel-yellow); margin-bottom: 15px;">💰 Can I win real money?</h3>
+                    <p class="game-description" style="margin-bottom: 30px;">
+                        No, PixelJackpot uses virtual coins only. This is a social gaming platform for entertainment purposes. All winnings are in virtual currency and cannot be exchanged for real money or real-world goods. The platform is designed to provide fun and entertainment without any financial risk.
+                    </p>
+                    <h3 class="game-title" style="color: var(--pixel-yellow); margin-bottom: 15px;">🎰 What games are available?</h3>
+                    <p class="game-description" style="margin-bottom: 30px;">
+                        PixelJackpot offers a variety of retro pixel-art games including slot machines, arcade poker, pixel blackjack, roulette, dice games, and baccarat. All games feature authentic 8-bit graphics, retro sound effects, and classic arcade gameplay. Check our Games page for the complete list of available games.
+                    </p>
+                    <h3 class="game-title" style="color: var(--pixel-yellow); margin-bottom: 15px;">🏆 How do tournaments work?</h3>
+                    <p class="game-description" style="margin-bottom: 30px;">
+                        Tournaments are competitive events where players compete against each other for prizes in virtual coins. You can register for upcoming tournaments or join live tournaments that are currently running. Prizes are awarded based on your final ranking, with top players winning the largest coin amounts. Check the Tournaments page for schedules and prize pools.
+                    </p>
+                    <div style="text-align: center; margin-top: 40px;">
+                        <button class="pixel-btn pixel-btn-secondary" onclick="window.location.href='faq.html'">VIEW ALL FAQs</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>THERAPY PLACE</h4>
+                    <p style="color: rgba(85, 255, 153, 0.7); font-size: 1rem; line-height: 1.6;">
+                        New Zealand's premier social casino games platform. Play responsibly and enjoy the entertainment!
+                    </p>
+                </div>
+                <div class="footer-section">
+                    <h4>QUICK LINKS</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="games.html">Games</a></li>
+                        <li><a href="store.html">Retro Store</a></li>
+                        <li><a href="tournaments.html">Tournaments</a></li>
+                        <li><a href="leaderboard.html">Leaderboard</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>LEGAL</h4>
+                    <ul class="footer-links">
+                        <li><a href="terms.html">Terms of Service</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="responsible.html">Responsible Gaming</a></li>
+                        <li><a href="help.html">Help & Support</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>SUPPORT</h4>
+                    <ul class="footer-links">
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="help.html">Help Center</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div style="border-top: 2px solid rgba(0, 217, 255, 0.3); padding-top: 20px; margin-top: 20px; text-align: center;">
+                <div style="margin-bottom: 15px;">
+                    <a href="https://gamblinghelpline.co.nz/" target="_blank" rel="noopener noreferrer" style="color: var(--bit-green); text-decoration: none; margin: 0 15px; font-size: 1.1rem; transition: all 0.3s;">Gambling Helpline NZ</a>
+                    <a href="https://responsiblegambling.org/" target="_blank" rel="noopener noreferrer" style="color: var(--bit-green); text-decoration: none; margin: 0 15px; font-size: 1.1rem; transition: all 0.3s;">Responsible Gambling</a>
+                    <a href="https://www.health.govt.nz/regulation-legislation/mental-health-and-addiction/gambling-act" target="_blank" rel="noopener noreferrer" style="color: var(--bit-green); text-decoration: none; margin: 0 15px; font-size: 1.1rem; transition: all 0.3s;">NZ Ministry of Health</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Therapy Place Social Casino Games Platform.</p>
+                <p style="margin-top: 10px;">18+ Only | No Real Money | Play Responsibly</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" onclick="scrollToTop()" id="backToTop">▲</button>
+
+    <script>
+        // Create pixel particles
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'pixel-particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 10 + 's';
+                particle.style.animationDuration = (Math.random() * 5 + 8) + 's';
+                const colors = ['var(--neon-blue)', 'var(--bit-green)', 'var(--pixel-yellow)', 'var(--electric-red)'];
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                container.appendChild(particle);
+            }
+        }
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('active');
+        }
+
+        // Dropdown toggle for mobile
+        function toggleDropdown(event, element) {
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            if (window.innerWidth <= 992) {
+                // Close other dropdowns
+                document.querySelectorAll('.nav-item').forEach(item => {
+                    if (item !== element) {
+                        item.classList.remove('active');
+                    }
+                });
+                element.classList.toggle('active');
+            }
+        }
+
+        // Jackpot animation
+        function animateJackpot() {
+            const jackpotEl = document.getElementById('jackpotAmount');
+            let current = 888888;
+            const target = 999999;
+            const increment = 123;
+            
+            const interval = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        current = 888888;
+                    }, 2000);
+                }
+                jackpotEl.textContent = '$' + current.toLocaleString();
+            }, 50);
+        }
+
+        // Ticker animation
+        function initTicker() {
+            const ticker = document.getElementById('ticker');
+            const content = ticker.innerHTML;
+            ticker.innerHTML = content + content + content; // Repeat for seamless loop
+        }
+
+        // Back to top button
+        window.addEventListener('scroll', () => {
+            const backToTop = document.getElementById('backToTop');
+            if (window.pageYOffset > 300) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Animate statistics
+        function animateStats() {
+            const stats = [
+                { id: 'totalPlayers', target: 125678, suffix: '' },
+                { id: 'totalGames', target: 50, suffix: '+' },
+                { id: 'totalPrizes', target: 25, suffix: 'M+' },
+                { id: 'totalTournaments', target: 1234, suffix: '' },
+                { id: 'activeNow', target: 8456, suffix: '' },
+                { id: 'dailyWinners', target: 567, suffix: '' }
+            ];
+
+            stats.forEach(stat => {
+                const element = document.getElementById(stat.id);
+                if (element) {
+                    let current = 0;
+                    const increment = stat.target / 100;
+                    const interval = setInterval(() => {
+                        current += increment;
+                        if (current >= stat.target) {
+                            current = stat.target;
+                            clearInterval(interval);
+                        }
+                        if (stat.id === 'totalPrizes') {
+                            element.textContent = Math.floor(current) + stat.suffix;
+                        } else {
+                            element.textContent = Math.floor(current).toLocaleString() + stat.suffix;
+                        }
+                    }, 20);
+                }
+            });
+        }
+
+        // Newsletter form handler
+        function handleNewsletter(event) {
+            event.preventDefault();
+            const email = document.getElementById('newsletterEmail').value;
+            const messageEl = document.getElementById('newsletterMessage');
+            
+            // Simulate subscription
+            messageEl.textContent = '✓ Successfully subscribed! Check your email for confirmation.';
+            messageEl.style.color = 'var(--bit-green)';
+            messageEl.style.display = 'block';
+            document.getElementById('newsletterEmail').value = '';
+            
+            setTimeout(() => {
+                messageEl.style.display = 'none';
+            }, 5000);
+        }
+
+        // Age Verification Functions
+        function confirmAge() {
+            localStorage.setItem('ageVerified', 'true');
+            document.getElementById('ageModal').classList.add('hidden');
+            // Show cookie modal after age verification
+            setTimeout(() => {
+                if (!localStorage.getItem('cookiesAccepted') && !localStorage.getItem('cookiesDeclined')) {
+                    document.getElementById('cookieModal').classList.remove('hidden');
+                }
+            }, 500);
+        }
+
+        function denyAge() {
+            alert('You must be 18 years or older to access this platform.');
+            window.location.href = 'https://www.google.com';
+        }
+
+        // Cookie Functions
+        function acceptCookies() {
+            localStorage.setItem('cookiesAccepted', 'true');
+            document.getElementById('cookieModal').classList.add('hidden');
+        }
+
+        function declineCookies() {
+            localStorage.setItem('cookiesDeclined', 'true');
+            document.getElementById('cookieModal').classList.add('hidden');
+        }
+
+        // Check age verification on load
+        function checkAgeVerification() {
+            if (!localStorage.getItem('ageVerified')) {
+                document.getElementById('ageModal').classList.remove('hidden');
+            } else {
+                // If age verified, check cookies
+                if (!localStorage.getItem('cookiesAccepted') && !localStorage.getItem('cookiesDeclined')) {
+                    document.getElementById('cookieModal').classList.remove('hidden');
+                }
+            }
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            checkAgeVerification();
+            createParticles();
+            animateJackpot();
+            initTicker();
+            animateStats();
+            
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', (e) => {
+                const navMenu = document.getElementById('navMenu');
+                const mobileToggle = document.querySelector('.mobile-toggle');
+                if (window.innerWidth <= 992 && 
+                    !navMenu.contains(e.target) && 
+                    !mobileToggle.contains(e.target)) {
+                    navMenu.classList.remove('active');
+                }
+            });
+        });
+
+        // Sound effects (placeholder - add actual sound files if needed)
+        function playSound(type) {
+            // This would play actual sound files
+            // For now, it's just a placeholder
+            console.log('Playing sound:', type);
+        }
+
+        // Add click sound to buttons
+        document.addEventListener('DOMContentLoaded', () => {
+            const buttons = document.querySelectorAll('.pixel-btn');
+            buttons.forEach(button => {
+                button.addEventListener('click', () => {
+                    playSound('click');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

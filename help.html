@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help & Support - Therapy Place Social Casino Games Platform</title>
+    <link rel="icon" type="image/png" href="./images/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --electric-red: #ff4d4d;
+            --neon-blue: #00d9ff;
+            --pixel-yellow: #ffdd55;
+            --bit-green: #55ff99;
+            --deep-black: #0a0a0a;
+            --crt-gray: #262626;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'VT323', monospace;
+            background: var(--deep-black);
+            color: var(--bit-green);
+            line-height: 1.8;
+            overflow-x: hidden;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15) 1px, transparent 1px, transparent 2px);
+            pointer-events: none;
+            z-index: 10000;
+            opacity: 0.3;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 217, 255, 0.03) 2px, rgba(0, 217, 255, 0.03) 4px),
+                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255, 77, 77, 0.03) 2px, rgba(255, 77, 77, 0.03) 4px);
+            pointer-events: none;
+            z-index: 9999;
+            animation: noise 0.2s infinite;
+        }
+        @keyframes noise {
+            0%, 100% { transform: translate(0, 0); }
+            10% { transform: translate(-1%, -1%); }
+            20% { transform: translate(1%, 1%); }
+            30% { transform: translate(-1%, 1%); }
+            40% { transform: translate(1%, -1%); }
+            50% { transform: translate(-1%, 0); }
+            60% { transform: translate(1%, 0); }
+            70% { transform: translate(0, -1%); }
+            80% { transform: translate(0, 1%); }
+            90% { transform: translate(-1%, -1%); }
+        }
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
+        header {
+            background: var(--crt-gray);
+            border-bottom: 4px solid var(--neon-blue);
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.5);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+        }
+        .navbar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+        .logo {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.2rem;
+            color: var(--pixel-yellow);
+            text-shadow: 0 0 10px var(--pixel-yellow), 2px 2px 0 var(--electric-red), 4px 4px 0 var(--deep-black);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            animation: blink 2s infinite;
+            text-decoration: none;
+        }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.8; } }
+        .logo span { font-size: 2rem; filter: drop-shadow(0 0 10px var(--pixel-yellow)); }
+        .nav-menu { display: flex; gap: 10px; list-style: none; flex-wrap: wrap; }
+        .nav-item { position: relative; }
+        .nav-link {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.7rem;
+            color: var(--bit-green);
+            text-decoration: none;
+            padding: 10px 15px;
+            display: block;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            background: var(--deep-black);
+            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+        }
+        .nav-link:hover {
+            color: var(--neon-blue);
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 15px var(--neon-blue), inset 0 0 15px rgba(0, 217, 255, 0.2);
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--crt-gray);
+            border: 2px solid var(--neon-blue);
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.5);
+            min-width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s;
+            z-index: 1001;
+            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+        }
+        .nav-item:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .dropdown-item {
+            display: block;
+            padding: 12px 20px;
+            color: var(--bit-green);
+            text-decoration: none;
+            font-size: 0.7rem;
+            border-bottom: 1px solid rgba(0, 217, 255, 0.2);
+            transition: all 0.3s;
+        }
+        .dropdown-item:hover {
+            background: rgba(0, 217, 255, 0.2);
+            color: var(--neon-blue);
+            padding-left: 25px;
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
+        .mobile-toggle {
+            display: none;
+            background: var(--deep-black);
+            border: 2px solid var(--neon-blue);
+            color: var(--bit-green);
+            padding: 10px 15px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+        }
+        .section { padding: 60px 0; }
+        .section-title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.5rem;
+            color: var(--pixel-yellow);
+            text-align: center;
+            margin-bottom: 40px;
+            text-shadow: 0 0 15px var(--pixel-yellow), 3px 3px 0 var(--deep-black);
+        }
+        .section-title::before,
+        .section-title::after {
+            content: '▓▓▓';
+            color: var(--neon-blue);
+            margin: 0 20px;
+        }
+        .help-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .help-card {
+            background: var(--crt-gray);
+            border: 3px solid var(--neon-blue);
+            padding: 30px;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+            transition: all 0.3s;
+        }
+        .help-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 30px var(--neon-blue);
+            border-color: var(--bit-green);
+        }
+        .help-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            display: block;
+            filter: drop-shadow(0 0 10px currentColor);
+        }
+        .help-card h3 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.9rem;
+            color: var(--bit-green);
+            margin-bottom: 15px;
+        }
+        .help-card p {
+            font-size: 1.2rem;
+            color: rgba(85, 255, 153, 0.8);
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+        .help-card ul {
+            margin-left: 30px;
+            margin-top: 15px;
+        }
+        .help-card li {
+            font-size: 1.1rem;
+            color: rgba(85, 255, 153, 0.8);
+            margin-bottom: 10px;
+            line-height: 1.8;
+        }
+        .content-box {
+            background: var(--crt-gray);
+            border: 4px solid var(--neon-blue);
+            padding: 40px;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+            margin-top: 40px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .content-box h3 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.9rem;
+            color: var(--pixel-yellow);
+            margin-bottom: 20px;
+            margin-top: 30px;
+        }
+        .content-box h3:first-child {
+            margin-top: 0;
+        }
+        .content-box p {
+            font-size: 1.2rem;
+            color: rgba(85, 255, 153, 0.8);
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+        .pixel-btn {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.7rem;
+            padding: 12px 25px;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 40px;
+        }
+        .pixel-btn-primary {
+            background: var(--electric-red);
+            color: var(--deep-black);
+            border: 3px solid var(--pixel-yellow);
+            box-shadow: 0 0 20px var(--electric-red), 4px 4px 0 var(--deep-black);
+        }
+        .pixel-btn-primary:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 0 0 30px var(--electric-red), 6px 6px 0 var(--deep-black);
+        }
+        .pixel-btn-secondary {
+            background: var(--neon-blue);
+            color: var(--deep-black);
+            border: 3px solid var(--bit-green);
+            box-shadow: 0 0 20px var(--neon-blue), 4px 4px 0 var(--deep-black);
+        }
+        .pixel-btn-secondary:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 0 0 30px var(--neon-blue), 6px 6px 0 var(--deep-black);
+        }
+        .back-to-home {
+            text-align: center;
+            margin-top: 40px;
+        }
+        footer {
+            background: var(--crt-gray);
+            border-top: 4px solid var(--neon-blue);
+            padding: 40px 0 20px;
+            margin-top: 60px;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+        .footer-section h4 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.7rem;
+            color: var(--pixel-yellow);
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px var(--pixel-yellow);
+        }
+        .footer-links {
+            list-style: none;
+        }
+        .footer-links a {
+            display: block;
+            color: var(--bit-green);
+            text-decoration: none;
+            padding: 8px 0;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            border-bottom: 1px solid transparent;
+        }
+        .footer-links a:hover {
+            color: var(--neon-blue);
+            padding-left: 10px;
+            text-shadow: 0 0 10px var(--neon-blue);
+            border-bottom-color: var(--neon-blue);
+        }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 2px solid rgba(0, 217, 255, 0.3);
+            color: rgba(85, 255, 153, 0.7);
+            font-size: 0.9rem;
+        }
+        @media (max-width: 992px) {
+            .nav-menu {
+                position: fixed;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background: var(--crt-gray);
+                flex-direction: column;
+                padding: 20px;
+                border-bottom: 4px solid var(--neon-blue);
+                display: none;
+                z-index: 999;
+            }
+            .nav-menu.active { display: flex; }
+            .mobile-toggle { display: block; }
+            .dropdown-menu {
+                position: static;
+                transform: none;
+                opacity: 1;
+                visibility: visible;
+                display: none;
+                margin-top: 10px;
+            }
+            .nav-item.active .dropdown-menu { display: block; }
+        }
+        @media (max-width: 768px) {
+            .section-title { font-size: 1.2rem; }
+            .help-grid { grid-template-columns: 1fr; }
+            .content-box { padding: 25px; }
+            .content-box h3 { font-size: 0.7rem; }
+            .content-box p { font-size: 1.1rem; }
+        }
+        @media (max-width: 480px) {
+            .pixel-btn { display: block; width: 100%; margin: 10px 0; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container navbar">
+            <a href="index.html" class="logo">
+                <span>🎰</span>
+                <span>THERAPY PLACE</span>
+            </a>
+            <button class="mobile-toggle" onclick="toggleMobileMenu()">☰</button>
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item" onclick="toggleDropdown(this)">
+                    <a href="games.html" class="nav-link">Games ▾</a>
+                    <div class="dropdown-menu">
+                        <a href="slots.html" class="dropdown-item">🎰 Slots</a>
+                        <a href="live-tournaments.html" class="dropdown-item">⚔ Live Tournaments</a>
+                    </div>
+                </li>
+                <li class="nav-item"><a href="store.html" class="nav-link">Retro Store</a></li>
+                <li class="nav-item"><a href="tournaments.html" class="nav-link">Tournaments</a></li>
+                <li class="nav-item"><a href="leaderboard.html" class="nav-link">Leaderboard</a></li>
+                <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">🆘 HELP & SUPPORT</h2>
+            <p style="text-align: center; font-size: 1.2rem; color: rgba(85, 255, 153, 0.7); margin-bottom: 40px;">
+                Need help? We're here to assist you!
+            </p>
+
+            <div class="help-grid">
+                <div class="help-card">
+                    <span class="help-icon" style="color: var(--electric-red);">📧</span>
+                    <h3>EMAIL SUPPORT</h3>
+                    <p>Send us an email and we'll respond within 24 hours. Our support team is available to help with any questions or issues.</p>
+                    <p><strong>Email:</strong> support@Therapy Place.com</p>
+                </div>
+
+                <div class="help-card">
+                    <span class="help-icon" style="color: var(--neon-blue);">💬</span>
+                    <h3>LIVE CHAT</h3>
+                    <p>Get instant help through our live chat feature. Available 24/7 for immediate assistance with any questions.</p>
+                    <p><strong>Status:</strong> Available Now</p>
+                </div>
+
+                <div class="help-card">
+                    <span class="help-icon" style="color: var(--pixel-yellow);">📚</span>
+                    <h3>FAQ SECTION</h3>
+                    <p>Find answers to commonly asked questions in our comprehensive FAQ section. Quick answers to most questions.</p>
+                    <a href="faq.html" class="pixel-btn pixel-btn-secondary" style="margin-top: 15px; font-size: 0.6rem; padding: 10px 20px;">VIEW FAQ</a>
+                </div>
+
+                <div class="help-card">
+                    <span class="help-icon" style="color: var(--bit-green);">📖</span>
+                    <h3>GUIDES & TUTORIALS</h3>
+                    <p>Learn how to use Therapy Place with our step-by-step guides and video tutorials. Everything you need to know in one place.</p>
+                    <ul>
+                        <li>Getting Started Guide</li>
+                        <li>Game Rules & Strategies</li>
+                        <li>Account Management</li>
+                        <li>Tournament Guides</li>
+                    </ul>
+                </div>
+
+                <div class="help-card">
+                    <span class="help-icon" style="color: var(--electric-red);">🔧</span>
+                    <h3>TROUBLESHOOTING</h3>
+                    <p>Common issues and solutions to help you resolve problems quickly without needing to contact support.</p>
+                    <ul>
+                        <li>Game not loading?</li>
+                        <li>Login problems?</li>
+                        <li>Payment issues?</li>
+                        <li>Performance problems?</li>
+                    </ul>
+                </div>
+
+                <div class="help-card">
+                    <span class="help-icon" style="color: var(--neon-blue);">🌐</span>
+                    <h3>COMMUNITY FORUM</h3>
+                    <p>Join our community forum to connect with other players, share tips, ask questions, and get help from experienced players.</p>
+                    <p><strong>Join:</strong> community.Therapy Place.com</p>
+                </div>
+            </div>
+
+            <div class="content-box" style="margin-top: 60px;">
+                <h3>QUICK CONTACT</h3>
+                <p>If you can't find what you're looking for, feel free to contact us directly:</p>
+                <p><strong>Email:</strong> support@Therapy Place.com</p>
+                <p><strong>Response Time:</strong> Within 24 hours</p>
+                <p><strong>Live Chat:</strong> Available 24/7</p>
+                <div style="margin-top: 30px;">
+                    <a href="contact.html" class="pixel-btn pixel-btn-primary">CONTACT US</a>
+                </div>
+            </div>
+
+            <div class="back-to-home">
+                <a href="index.html" class="pixel-btn pixel-btn-primary">BACK TO HOME</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>THERAPY PLACE</h4>
+                    <p style="color: rgba(85, 255, 153, 0.7); font-size: 1rem; line-height: 1.6;">
+                        The ultimate retro pixel-art arcade casino experience. Play responsibly and enjoy the nostalgia!
+                    </p>
+                </div>
+                <div class="footer-section">
+                    <h4>QUICK LINKS</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="games.html">Games</a></li>
+                        <li><a href="store.html">Retro Store</a></li>
+                        <li><a href="tournaments.html">Tournaments</a></li>
+                        <li><a href="leaderboard.html">Leaderboard</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>LEGAL</h4>
+                    <ul class="footer-links">
+                        <li><a href="terms.html">Terms of Service</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="responsible.html">Responsible Gaming</a></li>
+                        <li><a href="help.html">Help & Support</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>SUPPORT</h4>
+                    <ul class="footer-links">
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="help.html">Help Center</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Therapy Place. All rights reserved. 18+ Play Responsibly. Virtual Coins Only.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMobileMenu() {
+            document.getElementById('navMenu').classList.toggle('active');
+        }
+        function toggleDropdown(element) {
+            if (window.innerWidth <= 992) {
+                element.classList.toggle('active');
+            }
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            document.addEventListener('click', (e) => {
+                const navMenu = document.getElementById('navMenu');
+                const mobileToggle = document.querySelector('.mobile-toggle');
+                if (window.innerWidth <= 992 && !navMenu.contains(e.target) && !mobileToggle.contains(e.target)) {
+                    navMenu.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+

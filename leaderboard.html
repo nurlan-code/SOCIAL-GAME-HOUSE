@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard - Therapy Place Social Casino Games Platform</title>
+    <link rel="icon" type="image/png" href="./images/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --electric-red: #ff4d4d;
+            --neon-blue: #00d9ff;
+            --pixel-yellow: #ffdd55;
+            --bit-green: #55ff99;
+            --deep-black: #0a0a0a;
+            --crt-gray: #262626;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'VT323', monospace;
+            background: var(--deep-black);
+            color: var(--bit-green);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15) 1px, transparent 1px, transparent 2px);
+            pointer-events: none;
+            z-index: 10000;
+            opacity: 0.3;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 217, 255, 0.03) 2px, rgba(0, 217, 255, 0.03) 4px),
+                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255, 77, 77, 0.03) 2px, rgba(255, 77, 77, 0.03) 4px);
+            pointer-events: none;
+            z-index: 9999;
+            animation: noise 0.2s infinite;
+        }
+        @keyframes noise {
+            0%, 100% { transform: translate(0, 0); }
+            10% { transform: translate(-1%, -1%); }
+            20% { transform: translate(1%, 1%); }
+            30% { transform: translate(-1%, 1%); }
+            40% { transform: translate(1%, -1%); }
+            50% { transform: translate(-1%, 0); }
+            60% { transform: translate(1%, 0); }
+            70% { transform: translate(0, -1%); }
+            80% { transform: translate(0, 1%); }
+            90% { transform: translate(-1%, -1%); }
+        }
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
+        header {
+            background: var(--crt-gray);
+            border-bottom: 4px solid var(--neon-blue);
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.5);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+        }
+        .navbar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+        .logo {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.2rem;
+            color: var(--pixel-yellow);
+            text-shadow: 0 0 10px var(--pixel-yellow), 2px 2px 0 var(--electric-red), 4px 4px 0 var(--deep-black);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            animation: blink 2s infinite;
+            text-decoration: none;
+        }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.8; } }
+        .logo span { font-size: 2rem; filter: drop-shadow(0 0 10px var(--pixel-yellow)); }
+        .nav-menu { display: flex; gap: 10px; list-style: none; flex-wrap: wrap; }
+        .nav-item { position: relative; }
+        .nav-link {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.7rem;
+            color: var(--bit-green);
+            text-decoration: none;
+            padding: 10px 15px;
+            display: block;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            background: var(--deep-black);
+            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+        }
+        .nav-link:hover, .nav-link.active {
+            color: var(--neon-blue);
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 15px var(--neon-blue), inset 0 0 15px rgba(0, 217, 255, 0.2);
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--crt-gray);
+            border: 2px solid var(--neon-blue);
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.5);
+            min-width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s;
+            z-index: 1001;
+            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+        }
+        .nav-item:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .dropdown-item {
+            display: block;
+            padding: 12px 20px;
+            color: var(--bit-green);
+            text-decoration: none;
+            font-size: 0.7rem;
+            border-bottom: 1px solid rgba(0, 217, 255, 0.2);
+            transition: all 0.3s;
+        }
+        .dropdown-item:hover {
+            background: rgba(0, 217, 255, 0.2);
+            color: var(--neon-blue);
+            padding-left: 25px;
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
+        .mobile-toggle {
+            display: none;
+            background: var(--deep-black);
+            border: 2px solid var(--neon-blue);
+            color: var(--bit-green);
+            padding: 10px 15px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+        }
+        .section { padding: 60px 0; }
+        .section-title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.5rem;
+            color: var(--pixel-yellow);
+            text-align: center;
+            margin-bottom: 40px;
+            text-shadow: 0 0 15px var(--pixel-yellow), 3px 3px 0 var(--deep-black);
+        }
+        .section-title::before,
+        .section-title::after {
+            content: '▓▓▓';
+            color: var(--neon-blue);
+            margin: 0 20px;
+        }
+        .leaderboard-table {
+            background: var(--crt-gray);
+            border: 4px solid var(--neon-blue);
+            padding: 30px;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+            margin-top: 40px;
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.7rem;
+            color: var(--pixel-yellow);
+            padding: 20px 15px;
+            text-align: left;
+            border-bottom: 3px solid var(--neon-blue);
+            text-transform: uppercase;
+        }
+        td {
+            font-size: 1.2rem;
+            color: var(--bit-green);
+            padding: 20px 15px;
+            border-bottom: 1px solid rgba(0, 217, 255, 0.2);
+        }
+        tr:hover {
+            background: rgba(0, 217, 255, 0.1);
+        }
+        .rank {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1rem;
+            color: var(--pixel-yellow);
+            font-weight: bold;
+        }
+        .rank-1 { color: var(--pixel-yellow); text-shadow: 0 0 15px var(--pixel-yellow); }
+        .rank-2 { color: var(--neon-blue); text-shadow: 0 0 15px var(--neon-blue); }
+        .rank-3 { color: var(--bit-green); text-shadow: 0 0 15px var(--bit-green); }
+        .medal {
+            font-size: 2rem;
+            margin-right: 10px;
+        }
+        .avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--electric-red);
+            border: 2px solid var(--pixel-yellow);
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 10px;
+            clip-path: polygon(0 0, calc(100% - 5px) 0, 100% 5px, 100% 100%, 5px 100%, 0 calc(100% - 5px));
+        }
+        .username {
+            font-size: 1.3rem;
+            color: var(--bit-green);
+            font-weight: bold;
+        }
+        .coins {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.9rem;
+            color: var(--pixel-yellow);
+            text-shadow: 0 0 10px var(--pixel-yellow);
+        }
+        .pixel-btn {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.7rem;
+            padding: 12px 25px;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 30px;
+        }
+        .pixel-btn-primary {
+            background: var(--electric-red);
+            color: var(--deep-black);
+            border: 3px solid var(--pixel-yellow);
+            box-shadow: 0 0 20px var(--electric-red), 4px 4px 0 var(--deep-black);
+        }
+        .pixel-btn-primary:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 0 0 30px var(--electric-red), 6px 6px 0 var(--deep-black);
+        }
+        .back-to-home {
+            text-align: center;
+            margin-top: 40px;
+        }
+        footer {
+            background: var(--crt-gray);
+            border-top: 4px solid var(--neon-blue);
+            padding: 40px 0 20px;
+            margin-top: 60px;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+        .footer-section h4 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.7rem;
+            color: var(--pixel-yellow);
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px var(--pixel-yellow);
+        }
+        .footer-links {
+            list-style: none;
+        }
+        .footer-links a {
+            display: block;
+            color: var(--bit-green);
+            text-decoration: none;
+            padding: 8px 0;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            border-bottom: 1px solid transparent;
+        }
+        .footer-links a:hover {
+            color: var(--neon-blue);
+            padding-left: 10px;
+            text-shadow: 0 0 10px var(--neon-blue);
+            border-bottom-color: var(--neon-blue);
+        }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 2px solid rgba(0, 217, 255, 0.3);
+            color: rgba(85, 255, 153, 0.7);
+            font-size: 0.9rem;
+        }
+        @media (max-width: 992px) {
+            .nav-menu {
+                position: fixed;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background: var(--crt-gray);
+                flex-direction: column;
+                padding: 20px;
+                border-bottom: 4px solid var(--neon-blue);
+                display: none;
+                z-index: 999;
+            }
+            .nav-menu.active { display: flex; }
+            .mobile-toggle { display: block; }
+            .dropdown-menu {
+                position: static;
+                transform: none;
+                opacity: 1;
+                visibility: visible;
+                display: none;
+                margin-top: 10px;
+            }
+            .nav-item.active .dropdown-menu { display: block; }
+        }
+        @media (max-width: 768px) {
+            .section-title { font-size: 1.2rem; }
+            th, td { padding: 15px 10px; font-size: 0.9rem; }
+        }
+        @media (max-width: 480px) {
+            .pixel-btn { display: block; width: 100%; margin: 10px 0; }
+            .leaderboard-table { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container navbar">
+            <a href="index.html" class="logo">
+                <span>🎰</span>
+                <img src="./images/logo.png" alt="Therapy Place Logo" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+                <span style="display: none;">🎰</span>
+                <span>THERAPY PLACE</span>
+            </a>
+            <button class="mobile-toggle" onclick="toggleMobileMenu()">☰</button>
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item" onclick="toggleDropdown(this)">
+                    <a href="games.html" class="nav-link">Games ▾</a>
+                    <div class="dropdown-menu">
+                        <a href="slots.html" class="dropdown-item">🎰 Slots</a>
+                        <a href="live-tournaments.html" class="dropdown-item">⚔ Live Tournaments</a>
+                    </div>
+                </li>
+                <li class="nav-item"><a href="store.html" class="nav-link">Retro Store</a></li>
+                <li class="nav-item"><a href="tournaments.html" class="nav-link">Tournaments</a></li>
+                <li class="nav-item"><a href="leaderboard.html" class="nav-link active">Leaderboard</a></li>
+                <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">TOP PLAYERS LEADERBOARD</h2>
+            <p style="text-align: center; font-size: 1.2rem; color: rgba(85, 255, 153, 0.7); margin-bottom: 40px;">
+                See who's dominating the pixel arcade world!
+            </p>
+
+            <div class="leaderboard-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Player</th>
+                            <th>Total Coins</th>
+                            <th>Wins</th>
+                            <th>Level</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leaderboardBody">
+                        <tr>
+                            <td><span class="rank rank-1">1</span> <span class="medal">🥇</span></td>
+                            <td><div class="avatar"></div><span class="username">PixelMaster99</span></td>
+                            <td><span class="coins">5,234,567</span></td>
+                            <td>1,234</td>
+                            <td>99</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank rank-2">2</span> <span class="medal">🥈</span></td>
+                            <td><div class="avatar"></div><span class="username">ArcadeKing</span></td>
+                            <td><span class="coins">4,987,654</span></td>
+                            <td>1,189</td>
+                            <td>95</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank rank-3">3</span> <span class="medal">🥉</span></td>
+                            <td><div class="avatar"></div><span class="username">RetroGamer</span></td>
+                            <td><span class="coins">4,567,890</span></td>
+                            <td>1,045</td>
+                            <td>92</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank">4</span></td>
+                            <td><div class="avatar"></div><span class="username">SlotQueen</span></td>
+                            <td><span class="coins">4,123,456</span></td>
+                            <td>987</td>
+                            <td>88</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank">5</span></td>
+                            <td><div class="avatar"></div><span class="username">PokerPro</span></td>
+                            <td><span class="coins">3,876,543</span></td>
+                            <td>923</td>
+                            <td>85</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank">6</span></td>
+                            <td><div class="avatar"></div><span class="username">JackpotJunkie</span></td>
+                            <td><span class="coins">3,654,321</span></td>
+                            <td>876</td>
+                            <td>82</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank">7</span></td>
+                            <td><div class="avatar"></div><span class="username">NeonNinja</span></td>
+                            <td><span class="coins">3,432,109</span></td>
+                            <td>812</td>
+                            <td>78</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank">8</span></td>
+                            <td><div class="avatar"></div><span class="username">PixelPirate</span></td>
+                            <td><span class="coins">3,210,987</span></td>
+                            <td>765</td>
+                            <td>75</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank">9</span></td>
+                            <td><div class="avatar"></div><span class="username">ArcadeAce</span></td>
+                            <td><span class="coins">2,987,654</span></td>
+                            <td>734</td>
+                            <td>72</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank">10</span></td>
+                            <td><div class="avatar"></div><span class="username">RetroRocket</span></td>
+                            <td><span class="coins">2,765,432</span></td>
+                            <td>698</td>
+                            <td>69</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank">11</span></td>
+                            <td><div class="avatar"></div><span class="username">SlotShark</span></td>
+                            <td><span class="coins">2,543,210</span></td>
+                            <td>667</td>
+                            <td>67</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank">12</span></td>
+                            <td><div class="avatar"></div><span class="username">PokerPhenom</span></td>
+                            <td><span class="coins">2,321,098</span></td>
+                            <td>634</td>
+                            <td>64</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank">13</span></td>
+                            <td><div class="avatar"></div><span class="username">ArcadeAce</span></td>
+                            <td><span class="coins">2,198,765</span></td>
+                            <td>601</td>
+                            <td>61</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank">14</span></td>
+                            <td><div class="avatar"></div><span class="username">PixelProwler</span></td>
+                            <td><span class="coins">2,076,543</span></td>
+                            <td>578</td>
+                            <td>58</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank">15</span></td>
+                            <td><div class="avatar"></div><span class="username">NeonKnight</span></td>
+                            <td><span class="coins">1,954,321</span></td>
+                            <td>545</td>
+                            <td>55</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank">16</span></td>
+                            <td><div class="avatar"></div><span class="username">JackpotJuggler</span></td>
+                            <td><span class="coins">1,832,109</span></td>
+                            <td>512</td>
+                            <td>52</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank">17</span></td>
+                            <td><div class="avatar"></div><span class="username">RetroRacer</span></td>
+                            <td><span class="coins">1,709,876</span></td>
+                            <td>489</td>
+                            <td>49</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank">18</span></td>
+                            <td><div class="avatar"></div><span class="username">ArcadeAvenger</span></td>
+                            <td><span class="coins">1,587,654</span></td>
+                            <td>456</td>
+                            <td>46</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank">19</span></td>
+                            <td><div class="avatar"></div><span class="username">PixelPhantom</span></td>
+                            <td><span class="coins">1,465,432</span></td>
+                            <td>423</td>
+                            <td>43</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank">20</span></td>
+                            <td><div class="avatar"></div><span class="username">NeonNemesis</span></td>
+                            <td><span class="coins">1,343,210</span></td>
+                            <td>390</td>
+                            <td>40</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div style="text-align: center; margin-top: 50px; padding: 30px; background: var(--crt-gray); border: 3px solid var(--electric-red); clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);">
+                <h3 style="font-family: 'Press Start 2P', cursive; font-size: 0.9rem; color: var(--pixel-yellow); margin-bottom: 20px;">📈 CLIMB THE LEADERBOARD</h3>
+                <p style="font-size: 1.2rem; color: rgba(85, 255, 153, 0.8); line-height: 1.8; max-width: 800px; margin: 0 auto;">
+                    🎮 Play regularly to accumulate coins and increase your rank<br>
+                    🏆 Participate in tournaments to win big prizes and boost your standings<br>
+                    💰 Complete daily challenges and quests for bonus coins<br>
+                    ⭐ Win matches consistently to improve your win rate<br>
+                    🔥 Build win streaks to earn bonus multipliers<br>
+                    🎯 Focus on mastering specific games to maximize your coin earnings
+                </p>
+            </div>
+
+            <div class="back-to-home">
+                <a href="index.html" class="pixel-btn pixel-btn-primary">BACK TO HOME</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>THERAPY PLACE</h4>
+                    <p style="color: rgba(85, 255, 153, 0.7); font-size: 1rem; line-height: 1.6;">
+                        New Zealand's premier social casino games platform. Play responsibly and enjoy the entertainment!
+                    </p>
+                </div>
+                <div class="footer-section">
+                    <h4>QUICK LINKS</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="games.html">Games</a></li>
+                        <li><a href="store.html">Retro Store</a></li>
+                        <li><a href="tournaments.html">Tournaments</a></li>
+                        <li><a href="leaderboard.html">Leaderboard</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>LEGAL</h4>
+                    <ul class="footer-links">
+                        <li><a href="terms.html">Terms of Service</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="responsible.html">Responsible Gaming</a></li>
+                        <li><a href="help.html">Help & Support</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>SUPPORT</h4>
+                    <ul class="footer-links">
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="help.html">Help Center</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Therapy Place Social Casino Games Platform.</p>
+                <p style="margin-top: 10px;">18+ Only | No Real Money | Play Responsibly</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMobileMenu() {
+            document.getElementById('navMenu').classList.toggle('active');
+        }
+        function toggleDropdown(element) {
+            if (window.innerWidth <= 992) {
+                element.classList.toggle('active');
+            }
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            document.addEventListener('click', (e) => {
+                const navMenu = document.getElementById('navMenu');
+                const mobileToggle = document.querySelector('.mobile-toggle');
+                if (window.innerWidth <= 992 && !navMenu.contains(e.target) && !mobileToggle.contains(e.target)) {
+                    navMenu.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+

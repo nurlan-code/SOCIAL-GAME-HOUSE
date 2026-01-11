@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retro Store - Therapy Place Social Casino Games Platform</title>
+    <link rel="icon" type="image/png" href="./images/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --electric-red: #ff4d4d;
+            --neon-blue: #00d9ff;
+            --pixel-yellow: #ffdd55;
+            --bit-green: #55ff99;
+            --deep-black: #0a0a0a;
+            --crt-gray: #262626;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'VT323', monospace;
+            background: var(--deep-black);
+            color: var(--bit-green);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15) 1px, transparent 1px, transparent 2px);
+            pointer-events: none;
+            z-index: 10000;
+            opacity: 0.3;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 217, 255, 0.03) 2px, rgba(0, 217, 255, 0.03) 4px),
+                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255, 77, 77, 0.03) 2px, rgba(255, 77, 77, 0.03) 4px);
+            pointer-events: none;
+            z-index: 9999;
+            animation: noise 0.2s infinite;
+        }
+
+        @keyframes noise {
+            0%, 100% { transform: translate(0, 0); }
+            10% { transform: translate(-1%, -1%); }
+            20% { transform: translate(1%, 1%); }
+            30% { transform: translate(-1%, 1%); }
+            40% { transform: translate(1%, -1%); }
+            50% { transform: translate(-1%, 0); }
+            60% { transform: translate(1%, 0); }
+            70% { transform: translate(0, -1%); }
+            80% { transform: translate(0, 1%); }
+            90% { transform: translate(-1%, -1%); }
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            background: var(--crt-gray);
+            border-bottom: 4px solid var(--neon-blue);
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.5);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.2rem;
+            color: var(--pixel-yellow);
+            text-shadow: 0 0 10px var(--pixel-yellow), 2px 2px 0 var(--electric-red), 4px 4px 0 var(--deep-black);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            animation: blink 2s infinite;
+            text-decoration: none;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .logo span {
+            font-size: 2rem;
+            filter: drop-shadow(0 0 10px var(--pixel-yellow));
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 10px;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.7rem;
+            color: var(--bit-green);
+            text-decoration: none;
+            padding: 10px 15px;
+            display: block;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            background: var(--deep-black);
+            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--neon-blue);
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 15px var(--neon-blue), inset 0 0 15px rgba(0, 217, 255, 0.2);
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--crt-gray);
+            border: 2px solid var(--neon-blue);
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.5);
+            min-width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s;
+            z-index: 1001;
+            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+        }
+
+        .nav-item:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            display: block;
+            padding: 12px 20px;
+            color: var(--bit-green);
+            text-decoration: none;
+            font-size: 0.7rem;
+            border-bottom: 1px solid rgba(0, 217, 255, 0.2);
+            transition: all 0.3s;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(0, 217, 255, 0.2);
+            color: var(--neon-blue);
+            padding-left: 25px;
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
+
+        .mobile-toggle {
+            display: none;
+            background: var(--deep-black);
+            border: 2px solid var(--neon-blue);
+            color: var(--bit-green);
+            padding: 10px 15px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+        }
+
+        .section {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.5rem;
+            color: var(--pixel-yellow);
+            text-align: center;
+            margin-bottom: 40px;
+            text-shadow: 0 0 15px var(--pixel-yellow), 3px 3px 0 var(--deep-black);
+        }
+
+        .section-title::before,
+        .section-title::after {
+            content: '▓▓▓';
+            color: var(--neon-blue);
+            margin: 0 20px;
+        }
+
+        .store-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .store-item {
+            background: var(--crt-gray);
+            border: 3px solid var(--neon-blue);
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .store-item:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 0 30px var(--neon-blue), 0 10px 40px rgba(0, 217, 255, 0.3);
+            border-color: var(--bit-green);
+        }
+
+        .item-icon {
+            font-size: 5rem;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 0 10px currentColor);
+            animation: float 3s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .item-title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.9rem;
+            color: var(--bit-green);
+            margin-bottom: 10px;
+        }
+
+        .item-description {
+            font-size: 1.1rem;
+            color: rgba(85, 255, 153, 0.7);
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .item-price {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.8rem;
+            color: var(--pixel-yellow);
+            text-shadow: 0 0 10px var(--pixel-yellow);
+            margin-bottom: 15px;
+        }
+
+        .pixel-btn {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.7rem;
+            padding: 12px 25px;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .pixel-btn-buy {
+            background: var(--electric-red);
+            color: var(--deep-black);
+            border: 3px solid var(--pixel-yellow);
+            box-shadow: 0 0 20px var(--electric-red), 4px 4px 0 var(--deep-black);
+        }
+
+        .pixel-btn-buy:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 0 0 30px var(--electric-red), 6px 6px 0 var(--deep-black);
+        }
+
+        .pixel-btn-primary {
+            background: var(--neon-blue);
+            color: var(--deep-black);
+            border: 3px solid var(--bit-green);
+            box-shadow: 0 0 20px var(--neon-blue), 4px 4px 0 var(--deep-black);
+        }
+
+        .pixel-btn-primary:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 0 0 30px var(--neon-blue), 6px 6px 0 var(--deep-black);
+        }
+
+        .back-to-home {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        /* Category Filter */
+        .category-filter {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.6rem;
+            padding: 10px 20px;
+            background: var(--deep-black);
+            border: 3px solid var(--neon-blue);
+            color: var(--bit-green);
+            cursor: pointer;
+            clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--neon-blue);
+            color: var(--deep-black);
+            box-shadow: 0 0 20px var(--neon-blue);
+            transform: translateY(-3px);
+        }
+
+        .store-item.hidden {
+            display: none;
+        }
+
+        .store-item[data-category] {
+            display: block;
+        }
+
+        .item-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--pixel-yellow);
+            color: var(--deep-black);
+            padding: 5px 10px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.5rem;
+            clip-path: polygon(0 0, calc(100% - 4px) 0, 100% 4px, 100% 100%, 4px 100%, 0 calc(100% - 4px));
+        }
+
+        .store-item {
+            position: relative;
+        }
+
+        footer {
+            background: var(--crt-gray);
+            border-top: 4px solid var(--neon-blue);
+            padding: 40px 0 20px;
+            margin-top: 60px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h4 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.7rem;
+            color: var(--pixel-yellow);
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px var(--pixel-yellow);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links a {
+            display: block;
+            color: var(--bit-green);
+            text-decoration: none;
+            padding: 8px 0;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            border-bottom: 1px solid transparent;
+        }
+
+        .footer-links a:hover {
+            color: var(--neon-blue);
+            padding-left: 10px;
+            text-shadow: 0 0 10px var(--neon-blue);
+            border-bottom-color: var(--neon-blue);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 2px solid rgba(0, 217, 255, 0.3);
+            color: rgba(85, 255, 153, 0.7);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 1024px) {
+            .section-title {
+                font-size: 1.2rem;
+            }
+            .store-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+        }
+
+        @media (max-width: 992px) {
+            .navbar {
+                flex-wrap: wrap;
+            }
+            
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                background: var(--crt-gray);
+                flex-direction: column;
+                padding: 20px;
+                border-bottom: 4px solid var(--neon-blue);
+                transition: left 0.3s ease;
+                z-index: 999;
+                max-height: calc(100vh - 70px);
+                overflow-y: auto;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .mobile-toggle {
+                display: block;
+            }
+
+            .nav-item {
+                width: 100%;
+            }
+
+            .nav-link {
+                display: block;
+                width: 100%;
+                text-align: left;
+            }
+
+            .dropdown-menu {
+                position: static;
+                transform: none;
+                opacity: 1;
+                visibility: visible;
+                display: none;
+                margin-top: 10px;
+                margin-left: 20px;
+                border: 2px solid var(--neon-blue);
+                background: var(--deep-black);
+                box-shadow: none;
+            }
+
+            .nav-item.active .dropdown-menu {
+                display: block;
+            }
+
+            .dropdown-item {
+                padding: 15px 20px;
+                border-bottom: 1px solid rgba(0, 217, 255, 0.3);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 0.9rem;
+            }
+
+            .logo span {
+                font-size: 1.8rem;
+            }
+
+            .section-title {
+                font-size: 1rem;
+            }
+
+            .store-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pixel-btn {
+                font-size: 0.6rem;
+                padding: 12px 20px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .section {
+                padding: 30px 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 0.7rem;
+            }
+
+            .logo span {
+                font-size: 1.5rem;
+            }
+
+            .pixel-btn {
+                display: block;
+                width: 100%;
+                margin: 10px 0;
+                font-size: 0.55rem;
+                padding: 10px 15px;
+            }
+
+            .section-title {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 320px) {
+            .logo {
+                font-size: 0.6rem;
+            }
+
+            .logo span {
+                font-size: 1.3rem;
+            }
+
+            .container {
+                padding: 0 10px;
+            }
+
+            .pixel-btn {
+                font-size: 0.5rem;
+                padding: 8px 12px;
+            }
+
+            .section-title {
+                font-size: 0.8rem;
+            }
+
+            .nav-menu {
+                padding: 15px;
+            }
+
+            .nav-link {
+                font-size: 0.6rem;
+                padding: 8px 12px;
+            }
+
+            .dropdown-item {
+                font-size: 0.6rem;
+                padding: 12px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container navbar">
+            <a href="index.html" class="logo">
+                <img src="./images/logo.png" alt="Therapy Place Logo" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+                <span style="display: none;">🎰</span>
+                <span>THERAPY PLACE</span>
+            </a>
+            <button class="mobile-toggle" onclick="toggleMobileMenu()">☰</button>
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item" onclick="toggleDropdown(event, this)">
+                    <a href="games.html" class="nav-link" onclick="if(window.innerWidth <= 992) {event.preventDefault(); toggleDropdown(event, this.parentElement);}">Games ▾</a>
+                    <div class="dropdown-menu">
+                        <a href="slots.html" class="dropdown-item">🎰 Slots</a>
+                        <a href="live-tournaments.html" class="dropdown-item">⚔ Live Tournaments</a>
+                    </div>
+                </li>
+                <li class="nav-item"><a href="store.html" class="nav-link active">Retro Store</a></li>
+                <li class="nav-item"><a href="tournaments.html" class="nav-link">Tournaments</a></li>
+                <li class="nav-item"><a href="leaderboard.html" class="nav-link">Leaderboard</a></li>
+                <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">RETRO STORE</h2>
+            <p style="text-align: center; font-size: 1.2rem; color: rgba(85, 255, 153, 0.7); margin-bottom: 40px;">
+                Customize your pixel avatar and unlock exclusive retro items! All items are for virtual coins only.
+            </p>
+
+            <div class="category-filter">
+                <button class="filter-btn active" onclick="filterCategory('all')">ALL</button>
+                <button class="filter-btn" onclick="filterCategory('avatars')">AVATARS</button>
+                <button class="filter-btn" onclick="filterCategory('skins')">SKINS</button>
+                <button class="filter-btn" onclick="filterCategory('effects')">EFFECTS</button>
+                <button class="filter-btn" onclick="filterCategory('themes')">THEMES</button>
+                <button class="filter-btn" onclick="filterCategory('bundles')">BUNDLES</button>
+            </div>
+
+            <div class="store-grid">
+                <div class="store-item" data-category="avatars">
+                    <div class="item-badge">POPULAR</div>
+                    <div class="item-icon" style="color: var(--electric-red);">👤</div>
+                    <h3 class="item-title">Pixel Avatar Pack</h3>
+                    <p class="item-description">Complete collection of 8-bit character avatars. Choose from warriors, wizards, ninjas, and more! Includes 20 unique pixel art avatars with different styles and colors.</p>
+                    <div class="item-price">50,000 COINS</div>
+                    <button class="pixel-btn pixel-btn-buy" onclick="buyItem('Pixel Avatar Pack', 50000)">BUY NOW</button>
+                </div>
+
+                <div class="store-item" data-category="skins">
+                    <div class="item-icon" style="color: var(--neon-blue);">🎨</div>
+                    <h3 class="item-title">Neon Skin Pack</h3>
+                    <p class="item-description">Glowing neon skins for your avatar. Stand out with electric blue and green effects! Features animated neon borders and glowing trails. Perfect for standing out in tournaments!</p>
+                    <div class="item-price">75,000 COINS</div>
+                    <button class="pixel-btn pixel-btn-buy" onclick="buyItem('Neon Skin Pack', 75000)">BUY NOW</button>
+                </div>
+
+                <div class="store-item" data-category="bundles">
+                    <div class="item-badge">BEST VALUE</div>
+                    <div class="item-icon" style="color: var(--pixel-yellow);">💎</div>
+                    <h3 class="item-title">Premium Coin Bundle</h3>
+                    <p class="item-description">Get 500,000 coins instantly! Perfect for serious players who want to unlock everything. Includes bonus 50,000 coins and exclusive welcome gift!</p>
+                    <div class="item-price">500,000 COINS</div>
+                    <button class="pixel-btn pixel-btn-buy" onclick="buyItem('Premium Coin Bundle', 500000)">BUY NOW</button>
+                </div>
+
+                <div class="store-item" data-category="avatars">
+                    <div class="item-icon" style="color: var(--bit-green);">🎭</div>
+                    <h3 class="item-title">Retro Mask Collection</h3>
+                    <p class="item-description">Vintage arcade masks inspired by classic games. Show off your retro style! Collection includes 15 unique mask designs from iconic arcade games of the 80s and 90s.</p>
+                    <div class="item-price">35,000 COINS</div>
+                    <button class="pixel-btn pixel-btn-buy" onclick="buyItem('Retro Mask Collection', 35000)">BUY NOW</button>
+                </div>
+
+                <div class="store-item" data-category="effects">
+                    <div class="item-icon" style="color: var(--electric-red);">⚡</div>
+                    <h3 class="item-title">Power-Up Effects</h3>
+                    <p class="item-description">Special visual effects for your gameplay. Pixel explosions, neon trails, victory animations, and more! Unlock 10 different effect styles to customize your gaming experience.</p>
+                    <div class="item-price">60,000 COINS</div>
+                    <button class="pixel-btn pixel-btn-buy" onclick="buyItem('Power-Up Effects', 60000)">BUY NOW</button>
+                </div>
+
+                <div class="store-item" data-category="bundles">
+                    <div class="item-icon" style="color: var(--neon-blue);">🏆</div>
+                    <h3 class="item-title">Championship Badge</h3>
+                    <p class="item-description">Exclusive badge for tournament winners. Display your achievements with pride! Animated badge with special glow effects. Available to all players who want to showcase their competitive spirit!</p>
+                    <div class="item-price">100,000 COINS</div>
+                    <button class="pixel-btn pixel-btn-buy" onclick="buyItem('Championship Badge', 100000)">BUY NOW</button>
+                </div>
+
+                <div class="store-item" data-category="themes">
+                    <div class="item-icon" style="color: var(--pixel-yellow);">🎪</div>
+                    <h3 class="item-title">Arcade Theme Pack</h3>
+                    <p class="item-description">Transform your gaming interface with classic arcade themes. Nostalgia guaranteed! Includes 5 different theme variations: Classic Arcade, Neon City, Retro Wave, Pixel Paradise, and Vintage Vibes.</p>
+                    <div class="item-price">45,000 COINS</div>
+                    <button class="pixel-btn pixel-btn-buy" onclick="buyItem('Arcade Theme Pack', 45000)">BUY NOW</button>
+                </div>
+
+                <div class="store-item" data-category="bundles">
+                    <div class="item-icon" style="color: var(--bit-green);">🃏</div>
+                    <h3 class="item-title">VIP Card Design</h3>
+                    <p class="item-description">Personalized VIP card with custom pixel art design. Show your elite status! Includes animated card effects and exclusive VIP frame. Perfect for players who want to stand out!</p>
+                    <div class="item-price">80,000 COINS</div>
+                    <button class="pixel-btn pixel-btn-buy" onclick="buyItem('VIP Card Design', 80000)">BUY NOW</button>
+                </div>
+
+                <div class="store-item" data-category="skins">
+                    <div class="item-icon" style="color: var(--electric-red);">🔥</div>
+                    <h3 class="item-title">Flame Skin Pack</h3>
+                    <p class="item-description">Ignite your avatar with animated flame effects! Burning hot skins with dynamic fire animations. Includes 8 different flame color variations: Red, Blue, Green, Purple, Orange, Yellow, Cyan, and Rainbow!</p>
+                    <div class="item-price">65,000 COINS</div>
+                    <button class="pixel-btn pixel-btn-buy" onclick="buyItem('Flame Skin Pack', 65000)">BUY NOW</button>
+                </div>
+
+                <div class="store-item" data-category="effects">
+                    <div class="item-icon" style="color: var(--neon-blue);">✨</div>
+                    <h3 class="item-title">Sparkle Effects</h3>
+                    <p class="item-description">Add magical sparkle effects to your gameplay! Glittering particles, star trails, and cosmic animations. Perfect for players who love eye-catching visual effects. Includes 12 sparkle variations!</p>
+                    <div class="item-price">55,000 COINS</div>
+                    <button class="pixel-btn pixel-btn-buy" onclick="buyItem('Sparkle Effects', 55000)">BUY NOW</button>
+                </div>
+
+                <div class="store-item" data-category="avatars">
+                    <div class="item-icon" style="color: var(--pixel-yellow);">🤖</div>
+                    <h3 class="item-title">Robot Avatar Set</h3>
+                    <p class="item-description">Futuristic robot avatars with animated LED displays! Collection of 12 robot designs including Classic Bot, Cyber Ninja, Mecha Warrior, and more. Each robot has unique animations!</p>
+                    <div class="item-price">70,000 COINS</div>
+                    <button class="pixel-btn pixel-btn-buy" onclick="buyItem('Robot Avatar Set', 70000)">BUY NOW</button>
+                </div>
+
+                <div class="store-item" data-category="themes">
+                    <div class="item-icon" style="color: var(--bit-green);">🌌</div>
+                    <h3 class="item-title">Space Theme Pack</h3>
+                    <p class="item-description">Transform your interface into a cosmic space station! Includes space backgrounds, starfield effects, planet decorations, and astronaut-themed UI elements. Explore the galaxy while you play!</p>
+                    <div class="item-price">50,000 COINS</div>
+                    <button class="pixel-btn pixel-btn-buy" onclick="buyItem('Space Theme Pack', 50000)">BUY NOW</button>
+                </div>
+
+                <div class="store-item" data-category="bundles">
+                    <div class="item-badge">NEW</div>
+                    <div class="item-icon" style="color: var(--electric-red);">🎁</div>
+                    <h3 class="item-title">Starter Bundle</h3>
+                    <p class="item-description">Perfect for new players! Includes 100,000 coins, basic avatar pack, starter skin, and welcome effects. Everything you need to get started on your pixel gaming journey!</p>
+                    <div class="item-price">100,000 COINS</div>
+                    <button class="pixel-btn pixel-btn-buy" onclick="buyItem('Starter Bundle', 100000)">BUY NOW</button>
+                </div>
+
+                <div class="store-item" data-category="effects">
+                    <div class="item-icon" style="color: var(--neon-blue);">💫</div>
+                    <h3 class="item-title">Victory Animations</h3>
+                    <p class="item-description">Celebrate your wins in style! Epic victory animations including confetti bursts, trophy reveals, coin showers, and championship celebrations. Unlock 15 different victory styles!</p>
+                    <div class="item-price">85,000 COINS</div>
+                    <button class="pixel-btn pixel-btn-buy" onclick="buyItem('Victory Animations', 85000)">BUY NOW</button>
+                </div>
+
+                <div class="store-item" data-category="skins">
+                    <div class="item-icon" style="color: var(--pixel-yellow);">🌟</div>
+                    <h3 class="item-title">Gold Premium Skin</h3>
+                    <p class="item-description">Luxurious gold-plated skin with animated shine effects! Premium quality pixel art design with golden borders, sparkle effects, and exclusive glow animations. Show your premium status!</p>
+                    <div class="item-price">90,000 COINS</div>
+                    <button class="pixel-btn pixel-btn-buy" onclick="buyItem('Gold Premium Skin', 90000)">BUY NOW</button>
+                </div>
+
+                <div class="store-item" data-category="bundles">
+                    <div class="item-badge">LIMITED</div>
+                    <div class="item-icon" style="color: var(--bit-green);">🎊</div>
+                    <h3 class="item-title">Ultimate Bundle</h3>
+                    <p class="item-description">The complete package! Includes 1,000,000 coins, all avatar packs, all skin collections, all effects, all themes, and exclusive legendary items. Everything in one bundle - limited time offer!</p>
+                    <div class="item-price">1,000,000 COINS</div>
+                    <button class="pixel-btn pixel-btn-buy" onclick="buyItem('Ultimate Bundle', 1000000)">BUY NOW</button>
+                </div>
+            </div>
+
+            <div class="back-to-home">
+                <a href="index.html" class="pixel-btn pixel-btn-primary">BACK TO HOME</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>THERAPY PLACE</h4>
+                    <p style="color: rgba(85, 255, 153, 0.7); font-size: 1rem; line-height: 1.6;">
+                        New Zealand's premier social casino games platform. Play responsibly and enjoy the entertainment!
+                    </p>
+                </div>
+                <div class="footer-section">
+                    <h4>QUICK LINKS</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="games.html">Games</a></li>
+                        <li><a href="store.html">Retro Store</a></li>
+                        <li><a href="tournaments.html">Tournaments</a></li>
+                        <li><a href="leaderboard.html">Leaderboard</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>LEGAL</h4>
+                    <ul class="footer-links">
+                        <li><a href="terms.html">Terms of Service</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="responsible.html">Responsible Gaming</a></li>
+                        <li><a href="help.html">Help & Support</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>SUPPORT</h4>
+                    <ul class="footer-links">
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="help.html">Help Center</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div style="border-top: 2px solid rgba(0, 217, 255, 0.3); padding-top: 20px; margin-top: 20px; text-align: center;">
+                <div style="margin-bottom: 15px;">
+                    <a href="https://gamblinghelpline.co.nz/" target="_blank" rel="noopener noreferrer" style="color: var(--bit-green); text-decoration: none; margin: 0 15px; font-size: 1.1rem; transition: all 0.3s;">Gambling Helpline NZ</a>
+                    <a href="https://responsiblegambling.org/" target="_blank" rel="noopener noreferrer" style="color: var(--bit-green); text-decoration: none; margin: 0 15px; font-size: 1.1rem; transition: all 0.3s;">Responsible Gambling</a>
+                    <a href="https://www.health.govt.nz/regulation-legislation/mental-health-and-addiction/gambling-act" target="_blank" rel="noopener noreferrer" style="color: var(--bit-green); text-decoration: none; margin: 0 15px; font-size: 1.1rem; transition: all 0.3s;">NZ Ministry of Health</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Therapy Place Social Casino Games Platform.</p>
+                <p style="margin-top: 10px;">18+ Only | No Real Money | Play Responsibly</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMobileMenu() {
+            document.getElementById('navMenu').classList.toggle('active');
+        }
+
+        function toggleDropdown(event, element) {
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            if (window.innerWidth <= 992) {
+                // Close other dropdowns
+                document.querySelectorAll('.nav-item').forEach(item => {
+                    if (item !== element) {
+                        item.classList.remove('active');
+                    }
+                });
+                element.classList.toggle('active');
+            }
+        }
+
+        function buyItem(itemName, price) {
+            alert('Added ' + itemName + ' to cart for ' + price.toLocaleString() + ' coins!\n\nNote: This is a demo. No actual coins are used.');
+        }
+
+        function filterCategory(category) {
+            // Update active button
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Filter items
+            const items = document.querySelectorAll('.store-item');
+            items.forEach(item => {
+                if (category === 'all') {
+                    item.style.display = 'block';
+                } else {
+                    const itemCategory = item.getAttribute('data-category');
+                    if (itemCategory === category) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.addEventListener('click', (e) => {
+                const navMenu = document.getElementById('navMenu');
+                const mobileToggle = document.querySelector('.mobile-toggle');
+                if (window.innerWidth <= 992 && !navMenu.contains(e.target) && !mobileToggle.contains(e.target)) {
+                    navMenu.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+

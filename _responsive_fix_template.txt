@@ -1,0 +1,185 @@
+RESPONSIVE CSS TEMPLATE FOR ALL PAGES
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .section-title {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .navbar {
+        flex-wrap: wrap;
+    }
+    
+    .nav-menu {
+        position: fixed;
+        top: 70px;
+        left: -100%;
+        width: 100%;
+        background: var(--crt-gray);
+        flex-direction: column;
+        padding: 20px;
+        border-bottom: 4px solid var(--neon-blue);
+        transition: left 0.3s ease;
+        z-index: 999;
+        max-height: calc(100vh - 70px);
+        overflow-y: auto;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .nav-menu.active {
+        left: 0;
+    }
+
+    .mobile-toggle {
+        display: block;
+    }
+
+    .nav-item {
+        width: 100%;
+    }
+
+    .nav-link {
+        display: block;
+        width: 100%;
+        text-align: left;
+    }
+
+    .dropdown-menu {
+        position: static;
+        transform: none;
+        opacity: 1;
+        visibility: visible;
+        display: none;
+        margin-top: 10px;
+        margin-left: 20px;
+        border: 2px solid var(--neon-blue);
+        background: var(--deep-black);
+        box-shadow: none;
+    }
+
+    .nav-item.active .dropdown-menu {
+        display: block;
+    }
+
+    .dropdown-item {
+        padding: 15px 20px;
+        border-bottom: 1px solid rgba(0, 217, 255, 0.3);
+    }
+}
+
+@media (max-width: 768px) {
+    .logo {
+        font-size: 0.9rem;
+    }
+
+    .logo span {
+        font-size: 1.8rem;
+    }
+
+    .pixel-btn {
+        font-size: 0.6rem;
+        padding: 12px 20px;
+    }
+
+    .section-title {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .container {
+        padding: 0 15px;
+    }
+
+    .section {
+        padding: 30px 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo {
+        font-size: 0.7rem;
+    }
+
+    .logo span {
+        font-size: 1.5rem;
+    }
+
+    .pixel-btn {
+        display: block;
+        width: 100%;
+        margin: 10px 0;
+        font-size: 0.55rem;
+        padding: 10px 15px;
+    }
+
+    .section-title {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 320px) {
+    .logo {
+        font-size: 0.6rem;
+    }
+
+    .logo span {
+        font-size: 1.3rem;
+    }
+
+    .container {
+        padding: 0 10px;
+    }
+
+    .pixel-btn {
+        font-size: 0.5rem;
+        padding: 8px 12px;
+    }
+
+    .section-title {
+        font-size: 0.8rem;
+    }
+
+    .nav-menu {
+        padding: 15px;
+    }
+
+    .nav-link {
+        font-size: 0.6rem;
+        padding: 8px 12px;
+    }
+
+    .dropdown-item {
+        font-size: 0.6rem;
+        padding: 12px 15px;
+    }
+}
+
+JAVASCRIPT FOR DROPDOWN:
+function toggleDropdown(event, element) {
+    if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+    if (window.innerWidth <= 992) {
+        // Close other dropdowns
+        document.querySelectorAll('.nav-item').forEach(item => {
+            if (item !== element) {
+                item.classList.remove('active');
+            }
+        });
+        element.classList.toggle('active');
+    }
+}
+
+HTML FOR DROPDOWN:
+<li class="nav-item" onclick="toggleDropdown(event, this)">
+    <a href="games.html" class="nav-link" onclick="if(window.innerWidth <= 992) {event.preventDefault(); toggleDropdown(event, this.parentElement);}">Games ▾</a>
+    <div class="dropdown-menu">
+        <a href="slots.html" class="dropdown-item">🎰 Slots</a>
+        <a href="live-tournaments.html" class="dropdown-item">⚔ Live Tournaments</a>
+    </div>
+</li>
+

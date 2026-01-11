@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Games - Therapy Place Social Casino Games Platform</title>
+    <link rel="icon" type="image/png" href="./images/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --electric-red: #ff4d4d;
+            --neon-blue: #00d9ff;
+            --pixel-yellow: #ffdd55;
+            --bit-green: #55ff99;
+            --deep-black: #0a0a0a;
+            --crt-gray: #262626;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'VT323', monospace;
+            background: var(--deep-black);
+            color: var(--bit-green);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15),
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            z-index: 10000;
+            opacity: 0.3;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 217, 255, 0.03) 2px, rgba(0, 217, 255, 0.03) 4px),
+                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255, 77, 77, 0.03) 2px, rgba(255, 77, 77, 0.03) 4px);
+            pointer-events: none;
+            z-index: 9999;
+            animation: noise 0.2s infinite;
+        }
+
+        @keyframes noise {
+            0%, 100% { transform: translate(0, 0); }
+            10% { transform: translate(-1%, -1%); }
+            20% { transform: translate(1%, 1%); }
+            30% { transform: translate(-1%, 1%); }
+            40% { transform: translate(1%, -1%); }
+            50% { transform: translate(-1%, 0); }
+            60% { transform: translate(1%, 0); }
+            70% { transform: translate(0, -1%); }
+            80% { transform: translate(0, 1%); }
+            90% { transform: translate(-1%, -1%); }
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            background: var(--crt-gray);
+            border-bottom: 4px solid var(--neon-blue);
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.5);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.2rem;
+            color: var(--pixel-yellow);
+            text-shadow: 
+                0 0 10px var(--pixel-yellow),
+                2px 2px 0 var(--electric-red),
+                4px 4px 0 var(--deep-black);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            animation: blink 2s infinite;
+            text-decoration: none;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .logo span {
+            font-size: 2rem;
+            filter: drop-shadow(0 0 10px var(--pixel-yellow));
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 10px;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.7rem;
+            color: var(--bit-green);
+            text-decoration: none;
+            padding: 10px 15px;
+            display: block;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            position: relative;
+            background: var(--deep-black);
+            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--neon-blue);
+            border-color: var(--neon-blue);
+            box-shadow: 
+                0 0 15px var(--neon-blue),
+                inset 0 0 15px rgba(0, 217, 255, 0.2);
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--crt-gray);
+            border: 2px solid var(--neon-blue);
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.5);
+            min-width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s;
+            z-index: 1001;
+            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+        }
+
+        .nav-item:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            display: block;
+            padding: 12px 20px;
+            color: var(--bit-green);
+            text-decoration: none;
+            font-size: 0.7rem;
+            border-bottom: 1px solid rgba(0, 217, 255, 0.2);
+            transition: all 0.3s;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(0, 217, 255, 0.2);
+            color: var(--neon-blue);
+            padding-left: 25px;
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
+
+        .mobile-toggle {
+            display: none;
+            background: var(--deep-black);
+            border: 2px solid var(--neon-blue);
+            color: var(--bit-green);
+            padding: 10px 15px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+        }
+
+        .coming-soon-section {
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 80px 20px;
+            position: relative;
+        }
+
+        .coming-soon-box {
+            background: var(--crt-gray);
+            border: 4px solid var(--electric-red);
+            padding: 60px 40px;
+            max-width: 600px;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+            box-shadow: 
+                0 0 40px var(--electric-red),
+                inset 0 0 40px rgba(255, 77, 77, 0.2);
+            animation: crtFlicker 3s infinite;
+        }
+
+        @keyframes crtFlicker {
+            0%, 100% { opacity: 1; }
+            99.5% { opacity: 1; }
+            99.6% { opacity: 0.98; }
+            99.7% { opacity: 1; }
+            99.8% { opacity: 0.99; }
+            99.9% { opacity: 1; }
+        }
+
+        .coming-soon-icon {
+            font-size: 6rem;
+            margin-bottom: 30px;
+            animation: pulse 2s infinite;
+            filter: drop-shadow(0 0 20px var(--pixel-yellow));
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Game Container Styles */
+        .game-container {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 20px;
+            padding: 20px;
+            margin: 2rem 0;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border: 2px solid var(--pixel-yellow);
+        }
+
+        .game-wrapper {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            border-radius: 15px;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .game-iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 15px;
+        }
+
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            border-radius: 15px;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255, 221, 85, 0.3);
+            border-top: 5px solid var(--pixel-yellow);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: var(--pixel-yellow);
+            font-size: 1.2rem;
+            font-weight: bold;
+            font-family: 'Press Start 2P', cursive;
+        }
+
+        .game-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .control-button {
+            background: var(--crt-gray);
+            color: var(--bit-green);
+            border: 3px solid var(--pixel-yellow);
+            padding: 12px 24px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.6rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            clip-path: polygon(0 0, calc(100% - 5px) 0, 100% 5px, 100% 100%, 5px 100%, 0 calc(100% - 5px));
+            box-shadow: 0 0 15px rgba(255, 221, 85, 0.3);
+        }
+
+        .control-button:hover {
+            background: var(--pixel-yellow);
+            color: var(--deep-black);
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px var(--pixel-yellow);
+        }
+
+        .fullscreen-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 10000;
+            display: none;
+        }
+
+        .fullscreen-overlay.active {
+            display: block;
+        }
+
+        .game-iframe-fullscreen {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .exit-fullscreen {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--electric-red);
+            color: var(--deep-black);
+            border: 3px solid var(--pixel-yellow);
+            padding: 10px 20px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.7rem;
+            cursor: pointer;
+            z-index: 10001;
+            clip-path: polygon(0 0, calc(100% - 5px) 0, 100% 5px, 100% 100%, 5px 100%, 0 calc(100% - 5px));
+        }
+
+        .exit-fullscreen:hover {
+            background: var(--pixel-yellow);
+            box-shadow: 0 0 20px var(--electric-red);
+        }
+
+        .coming-soon-title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.5rem;
+            color: var(--pixel-yellow);
+            text-shadow: 
+                0 0 20px var(--pixel-yellow),
+                3px 3px 0 var(--deep-black);
+            margin-bottom: 20px;
+            animation: blink 2s infinite;
+        }
+
+        .coming-soon-text {
+            font-size: 1.3rem;
+            color: var(--bit-green);
+            line-height: 1.8;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px var(--bit-green);
+        }
+
+        .pixel-btn {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.7rem;
+            padding: 15px 30px;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            position: relative;
+            margin: 10px;
+            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .pixel-btn-primary {
+            background: var(--electric-red);
+            color: var(--deep-black);
+            border: 3px solid var(--pixel-yellow);
+            box-shadow: 
+                0 0 20px var(--electric-red),
+                4px 4px 0 var(--deep-black);
+        }
+
+        .pixel-btn-primary:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 
+                0 0 30px var(--electric-red),
+                6px 6px 0 var(--deep-black);
+        }
+
+        footer {
+            background: var(--crt-gray);
+            border-top: 4px solid var(--neon-blue);
+            padding: 40px 0 20px;
+            margin-top: 60px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h4 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.7rem;
+            color: var(--pixel-yellow);
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px var(--pixel-yellow);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links a {
+            display: block;
+            color: var(--bit-green);
+            text-decoration: none;
+            padding: 8px 0;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            border-bottom: 1px solid transparent;
+        }
+
+        .footer-links a:hover {
+            color: var(--neon-blue);
+            padding-left: 10px;
+            text-shadow: 0 0 10px var(--neon-blue);
+            border-bottom-color: var(--neon-blue);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 2px solid rgba(0, 217, 255, 0.3);
+            color: rgba(85, 255, 153, 0.7);
+            font-size: 0.9rem;
+        }
+
+        .back-to-home {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 992px) {
+            .nav-menu {
+                position: fixed;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background: var(--crt-gray);
+                flex-direction: column;
+                padding: 20px;
+                border-bottom: 4px solid var(--neon-blue);
+                display: none;
+                z-index: 999;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .mobile-toggle {
+                display: block;
+            }
+
+            .dropdown-menu {
+                position: static;
+                transform: none;
+                opacity: 1;
+                visibility: visible;
+                display: none;
+                margin-top: 10px;
+            }
+
+            .nav-item.active .dropdown-menu {
+                display: block;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .coming-soon-box {
+                padding: 40px 25px;
+            }
+
+            .coming-soon-title {
+                font-size: 1.2rem;
+            }
+
+            .coming-soon-icon {
+                font-size: 4rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .coming-soon-title {
+                font-size: 1rem;
+            }
+
+            .coming-soon-text {
+                font-size: 1.1rem;
+            }
+
+            .pixel-btn {
+                display: block;
+                width: 100%;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container navbar">
+            <a href="index.html" class="logo">
+                <img src="./images/logo.png" alt="Therapy Place Logo" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+                <span style="display: none;">🎰</span>
+                <span>THERAPY PLACE</span>
+            </a>
+            <button class="mobile-toggle" onclick="toggleMobileMenu()">☰</button>
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item" onclick="toggleDropdown(event, this)">
+                    <a href="games.html" class="nav-link active" onclick="if(window.innerWidth <= 992) {event.preventDefault(); toggleDropdown(event, this.parentElement);}">Games ▾</a>
+                    <div class="dropdown-menu">
+                        <a href="slots.html" class="dropdown-item">🎰 Slots</a>
+                        <a href="live-tournaments.html" class="dropdown-item">⚔ Live Tournaments</a>
+                    </div>
+                </li>
+                <li class="nav-item"><a href="store.html" class="nav-link">Retro Store</a></li>
+                <li class="nav-item"><a href="tournaments.html" class="nav-link">Tournaments</a></li>
+                <li class="nav-item"><a href="leaderboard.html" class="nav-link">Leaderboard</a></li>
+                <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <section class="coming-soon-section">
+        <div class="container">
+            <div class="coming-soon-box" style="max-width: 1200px;">
+                <h1 class="coming-soon-title">🎰 SLOT GAME DEMO</h1>
+                <p class="coming-soon-text" style="margin-bottom: 30px;">
+                    Experience our interactive slot game demo! Play for fun with virtual coins.
+                </p>
+                
+                <div class="game-container">
+                    <div class="game-wrapper">
+                        <div class="loading-overlay" id="loadingOverlay">
+                            <div class="loading-spinner"></div>
+                            <div class="loading-text">Loading Olympus Wins...</div>
+                        </div>
+                        <iframe 
+                            id="gameFrame"
+                            class="game-iframe"
+                            src="https://asccw.playngonetwork.com/casino/ContainerLauncher?pid=2&gid=journeytoparis&lang=en_GB&practice=1&channel=desktop&demo=2"
+                            allow="fullscreen"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+
+                <div class="game-controls">
+                    <button class="control-button" onclick="refreshGame()">🔄 Refresh Game</button>
+                    <button class="control-button" onclick="toggleFullscreen()">⛶ Fullscreen</button>
+                    <button class="control-button" onclick="toggleSound()">🔊 Sound</button>
+                </div>
+
+                <div style="margin-top: 30px; padding: 20px; background: var(--deep-black); border: 2px solid var(--neon-blue); clip-path: polygon(0 0, calc(100% - 5px) 0, 100% 5px, 100% 100%, 5px 100%, 0 calc(100% - 5px));">
+                    <p style="font-size: 1.1rem; color: var(--bit-green); line-height: 1.6;">
+                        <strong style="color: var(--pixel-yellow);">Demo Mode:</strong> This is a demo version for entertainment purposes only. No real money is used or won.
+                    </p>
+                </div>
+
+                <div style="margin-top: 30px;">
+                    <a href="index.html" class="pixel-btn pixel-btn-primary">BACK TO HOME</a>
+                </div>
+            </div>
+
+            <!-- Fullscreen Overlay -->
+            <div class="fullscreen-overlay" id="fullscreenOverlay">
+                <button class="exit-fullscreen" onclick="exitFullscreen()">✕ Exit Fullscreen</button>
+                <iframe id="fullscreenFrame" class="game-iframe-fullscreen"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>THERAPY PLACE</h4>
+                    <p style="color: rgba(85, 255, 153, 0.7); font-size: 1rem; line-height: 1.6;">
+                        New Zealand's premier social casino games platform. Play responsibly and enjoy the entertainment!
+                    </p>
+                </div>
+                <div class="footer-section">
+                    <h4>QUICK LINKS</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="games.html">Games</a></li>
+                        <li><a href="store.html">Retro Store</a></li>
+                        <li><a href="tournaments.html">Tournaments</a></li>
+                        <li><a href="leaderboard.html">Leaderboard</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>LEGAL</h4>
+                    <ul class="footer-links">
+                        <li><a href="terms.html">Terms of Service</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="responsible.html">Responsible Gaming</a></li>
+                        <li><a href="help.html">Help & Support</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>SUPPORT</h4>
+                    <ul class="footer-links">
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="help.html">Help Center</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div style="border-top: 2px solid rgba(0, 217, 255, 0.3); padding-top: 20px; margin-top: 20px; text-align: center;">
+                <div style="margin-bottom: 15px;">
+                    <a href="https://gamblinghelpline.co.nz/" target="_blank" rel="noopener noreferrer" style="color: var(--bit-green); text-decoration: none; margin: 0 15px; font-size: 1.1rem; transition: all 0.3s;">Gambling Helpline NZ</a>
+                    <a href="https://responsiblegambling.org/" target="_blank" rel="noopener noreferrer" style="color: var(--bit-green); text-decoration: none; margin: 0 15px; font-size: 1.1rem; transition: all 0.3s;">Responsible Gambling</a>
+                    <a href="https://www.health.govt.nz/regulation-legislation/mental-health-and-addiction/gambling-act" target="_blank" rel="noopener noreferrer" style="color: var(--bit-green); text-decoration: none; margin: 0 15px; font-size: 1.1rem; transition: all 0.3s;">NZ Ministry of Health</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Therapy Place Social Casino Games Platform.</p>
+                <p style="margin-top: 10px;">18+ Only | No Real Money | Play Responsibly</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMobileMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('active');
+        }
+
+        function toggleDropdown(event, element) {
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            if (window.innerWidth <= 992) {
+                document.querySelectorAll('.nav-item').forEach(item => {
+                    if (item !== element) {
+                        item.classList.remove('active');
+                    }
+                });
+                element.classList.toggle('active');
+            }
+        }
+
+        let gameLoaded = false;
+        let soundEnabled = true;
+
+        // Handle iframe loading
+        document.addEventListener('DOMContentLoaded', function() {
+            const gameFrame = document.getElementById('gameFrame');
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            
+            if (gameFrame && loadingOverlay) {
+                gameFrame.addEventListener('load', function() {
+                    setTimeout(() => {
+                        loadingOverlay.style.display = 'none';
+                        gameLoaded = true;
+                    }, 2000);
+                });
+            }
+        });
+
+        // Refresh game function
+        function refreshGame() {
+            const gameFrame = document.getElementById('gameFrame');
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            
+            if (loadingOverlay) loadingOverlay.style.display = 'flex';
+            gameLoaded = false;
+            
+            if (gameFrame) {
+                gameFrame.src = gameFrame.src;
+            }
+        }
+
+        // Fullscreen functionality
+        function toggleFullscreen() {
+            const overlay = document.getElementById('fullscreenOverlay');
+            const fullscreenFrame = document.getElementById('fullscreenFrame');
+            const originalFrame = document.getElementById('gameFrame');
+            
+            if (!overlay || !fullscreenFrame || !originalFrame) return;
+            
+            overlay.classList.add('active');
+            fullscreenFrame.src = originalFrame.src;
+            
+            if (overlay.requestFullscreen) {
+                overlay.requestFullscreen();
+            } else if (overlay.webkitRequestFullscreen) {
+                overlay.webkitRequestFullscreen();
+            } else if (overlay.msRequestFullscreen) {
+                overlay.msRequestFullscreen();
+            }
+        }
+
+        function exitFullscreen() {
+            const overlay = document.getElementById('fullscreenOverlay');
+            if (!overlay) return;
+            
+            overlay.classList.remove('active');
+            
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            }
+        }
+
+        // Handle ESC key to exit fullscreen
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                exitFullscreen();
+            }
+        });
+
+        // Sound toggle function
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            const button = event.target;
+            button.textContent = soundEnabled ? '🔊 Sound' : '🔇 Sound';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.addEventListener('click', (e) => {
+                const navMenu = document.getElementById('navMenu');
+                const mobileToggle = document.querySelector('.mobile-toggle');
+                if (window.innerWidth <= 992 && 
+                    !navMenu.contains(e.target) && 
+                    !mobileToggle.contains(e.target)) {
+                    navMenu.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+

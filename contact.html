@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Therapy Place Social Casino Games Platform</title>
+    <link rel="icon" type="image/png" href="./images/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --electric-red: #ff4d4d;
+            --neon-blue: #00d9ff;
+            --pixel-yellow: #ffdd55;
+            --bit-green: #55ff99;
+            --deep-black: #0a0a0a;
+            --crt-gray: #262626;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'VT323', monospace;
+            background: var(--deep-black);
+            color: var(--bit-green);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15) 1px, transparent 1px, transparent 2px);
+            pointer-events: none;
+            z-index: 10000;
+            opacity: 0.3;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 217, 255, 0.03) 2px, rgba(0, 217, 255, 0.03) 4px),
+                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255, 77, 77, 0.03) 2px, rgba(255, 77, 77, 0.03) 4px);
+            pointer-events: none;
+            z-index: 9999;
+            animation: noise 0.2s infinite;
+        }
+        @keyframes noise {
+            0%, 100% { transform: translate(0, 0); }
+            10% { transform: translate(-1%, -1%); }
+            20% { transform: translate(1%, 1%); }
+            30% { transform: translate(-1%, 1%); }
+            40% { transform: translate(1%, -1%); }
+            50% { transform: translate(-1%, 0); }
+            60% { transform: translate(1%, 0); }
+            70% { transform: translate(0, -1%); }
+            80% { transform: translate(0, 1%); }
+            90% { transform: translate(-1%, -1%); }
+        }
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
+        header {
+            background: var(--crt-gray);
+            border-bottom: 4px solid var(--neon-blue);
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.5);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+        }
+        .navbar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+        .logo {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.2rem;
+            color: var(--pixel-yellow);
+            text-shadow: 0 0 10px var(--pixel-yellow), 2px 2px 0 var(--electric-red), 4px 4px 0 var(--deep-black);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            animation: blink 2s infinite;
+            text-decoration: none;
+        }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.8; } }
+        .logo span { font-size: 2rem; filter: drop-shadow(0 0 10px var(--pixel-yellow)); }
+        .nav-menu { display: flex; gap: 10px; list-style: none; flex-wrap: wrap; }
+        .nav-item { position: relative; }
+        .nav-link {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.7rem;
+            color: var(--bit-green);
+            text-decoration: none;
+            padding: 10px 15px;
+            display: block;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            background: var(--deep-black);
+            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+        }
+        .nav-link:hover, .nav-link.active {
+            color: var(--neon-blue);
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 15px var(--neon-blue), inset 0 0 15px rgba(0, 217, 255, 0.2);
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--crt-gray);
+            border: 2px solid var(--neon-blue);
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.5);
+            min-width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s;
+            z-index: 1001;
+            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+        }
+        .nav-item:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .dropdown-item {
+            display: block;
+            padding: 12px 20px;
+            color: var(--bit-green);
+            text-decoration: none;
+            font-size: 0.7rem;
+            border-bottom: 1px solid rgba(0, 217, 255, 0.2);
+            transition: all 0.3s;
+        }
+        .dropdown-item:hover {
+            background: rgba(0, 217, 255, 0.2);
+            color: var(--neon-blue);
+            padding-left: 25px;
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
+        .mobile-toggle {
+            display: none;
+            background: var(--deep-black);
+            border: 2px solid var(--neon-blue);
+            color: var(--bit-green);
+            padding: 10px 15px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+        }
+        .section { padding: 60px 0; }
+        .section-title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.5rem;
+            color: var(--pixel-yellow);
+            text-align: center;
+            margin-bottom: 40px;
+            text-shadow: 0 0 15px var(--pixel-yellow), 3px 3px 0 var(--deep-black);
+        }
+        .section-title::before,
+        .section-title::after {
+            content: '▓▓▓';
+            color: var(--neon-blue);
+            margin: 0 20px;
+        }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+        .contact-form-container {
+            background: var(--crt-gray);
+            border: 4px solid var(--neon-blue);
+            padding: 40px;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+        }
+        .contact-form-container h3 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1rem;
+            color: var(--bit-green);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 25px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 1.1rem;
+            color: var(--bit-green);
+            margin-bottom: 10px;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            background: var(--deep-black);
+            border: 2px solid var(--neon-blue);
+            color: var(--bit-green);
+            font-family: 'VT323', monospace;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--pixel-yellow);
+            box-shadow: 0 0 20px var(--pixel-yellow);
+        }
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        .pixel-btn {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.7rem;
+            padding: 15px 30px;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+            text-decoration: none;
+            display: inline-block;
+            width: 100%;
+        }
+        .pixel-btn-primary {
+            background: var(--electric-red);
+            color: var(--deep-black);
+            border: 3px solid var(--pixel-yellow);
+            box-shadow: 0 0 20px var(--electric-red), 4px 4px 0 var(--deep-black);
+        }
+        .pixel-btn-primary:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 0 0 30px var(--electric-red), 6px 6px 0 var(--deep-black);
+        }
+        .contact-info-card {
+            background: var(--crt-gray);
+            border: 4px solid var(--electric-red);
+            padding: 40px;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+            text-align: center;
+        }
+        .contact-info-card h3 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1rem;
+            color: var(--pixel-yellow);
+            margin-bottom: 30px;
+        }
+        .contact-item {
+            margin-bottom: 30px;
+        }
+        .contact-item .icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+        .contact-item h4 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.8rem;
+            color: var(--bit-green);
+            margin-bottom: 10px;
+        }
+        .contact-item p {
+            font-size: 1.2rem;
+            color: rgba(85, 255, 153, 0.7);
+        }
+        .back-to-home {
+            text-align: center;
+            margin-top: 40px;
+        }
+        footer {
+            background: var(--crt-gray);
+            border-top: 4px solid var(--neon-blue);
+            padding: 40px 0 20px;
+            margin-top: 60px;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+        .footer-section h4 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.7rem;
+            color: var(--pixel-yellow);
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px var(--pixel-yellow);
+        }
+        .footer-links {
+            list-style: none;
+        }
+        .footer-links a {
+            display: block;
+            color: var(--bit-green);
+            text-decoration: none;
+            padding: 8px 0;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            border-bottom: 1px solid transparent;
+        }
+        .footer-links a:hover {
+            color: var(--neon-blue);
+            padding-left: 10px;
+            text-shadow: 0 0 10px var(--neon-blue);
+            border-bottom-color: var(--neon-blue);
+        }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 2px solid rgba(0, 217, 255, 0.3);
+            color: rgba(85, 255, 153, 0.7);
+            font-size: 0.9rem;
+        }
+        .success-message {
+            background: var(--bit-green);
+            color: var(--deep-black);
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.1rem;
+            display: none;
+            clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+        }
+        .success-message.show {
+            display: block;
+        }
+        @media (max-width: 992px) {
+            .nav-menu {
+                position: fixed;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background: var(--crt-gray);
+                flex-direction: column;
+                padding: 20px;
+                border-bottom: 4px solid var(--neon-blue);
+                display: none;
+                z-index: 999;
+            }
+            .nav-menu.active { display: flex; }
+            .mobile-toggle { display: block; }
+            .dropdown-menu {
+                position: static;
+                transform: none;
+                opacity: 1;
+                visibility: visible;
+                display: none;
+                margin-top: 10px;
+            }
+            .nav-item.active .dropdown-menu { display: block; }
+        }
+        @media (max-width: 768px) {
+            .section-title { font-size: 1.2rem; }
+            .contact-grid { grid-template-columns: 1fr; }
+            .contact-form-container,
+            .contact-info-card { padding: 25px; }
+        }
+        @media (max-width: 480px) {
+            .pixel-btn { font-size: 0.6rem; padding: 12px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container navbar">
+            <a href="index.html" class="logo">
+                <span>🎰</span>
+                <img src="./images/logo.png" alt="Therapy Place Logo" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+                <span style="display: none;">🎰</span>
+                <span>THERAPY PLACE</span>
+            </a>
+            <button class="mobile-toggle" onclick="toggleMobileMenu()">☰</button>
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item" onclick="toggleDropdown(this)">
+                    <a href="games.html" class="nav-link">Games ▾</a>
+                    <div class="dropdown-menu">
+                        <a href="slots.html" class="dropdown-item">🎰 Slots</a>
+                        <a href="live-tournaments.html" class="dropdown-item">⚔ Live Tournaments</a>
+                    </div>
+                </li>
+                <li class="nav-item"><a href="store.html" class="nav-link">Retro Store</a></li>
+                <li class="nav-item"><a href="tournaments.html" class="nav-link">Tournaments</a></li>
+                <li class="nav-item"><a href="leaderboard.html" class="nav-link">Leaderboard</a></li>
+                <li class="nav-item"><a href="contact.html" class="nav-link active">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">CONTACT US</h2>
+            <p style="text-align: center; font-size: 1.2rem; color: rgba(85, 255, 153, 0.7); margin-bottom: 40px;">
+                Have a question? Get in touch with our support team!
+            </p>
+
+            <div class="contact-grid">
+                <div class="contact-form-container">
+                    <h3>📧 SEND MESSAGE</h3>
+                    <div class="success-message" id="successMessage">
+                        ✓ Message sent successfully! We'll get back to you soon.
+                    </div>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Full Name *</label>
+                            <input type="text" id="name" name="name" required placeholder="Enter your name">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" name="email" required placeholder="your.email@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject *</label>
+                            <select id="subject" name="subject" required>
+                                <option value="">Select a subject</option>
+                                <option value="general">General Inquiry</option>
+                                <option value="support">Technical Support</option>
+                                <option value="feedback">Feedback</option>
+                                <option value="bug">Bug Report</option>
+                                <option value="partnership">Partnership</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message *</label>
+                            <textarea id="message" name="message" required placeholder="Tell us how we can help you..."></textarea>
+                        </div>
+                        <button type="submit" class="pixel-btn pixel-btn-primary">SEND MESSAGE</button>
+                    </form>
+                </div>
+
+                <div class="contact-info-card">
+                    <h3>💬 GET IN TOUCH</h3>
+                    <div class="contact-item">
+                        <span class="icon" style="color: var(--electric-red);">📧</span>
+                        <h4>Email Support</h4>
+                        <p>support@pixeljackpot.com</p>
+                        <p style="font-size: 0.9rem; color: rgba(85, 255, 153, 0.6); margin-top: 5px;">For general inquiries and technical support</p>
+                    </div>
+                    <div class="contact-item">
+                        <span class="icon" style="color: var(--neon-blue);">💬</span>
+                        <h4>Live Chat</h4>
+                        <p>Available 24/7</p>
+                        <p style="font-size: 0.9rem; color: rgba(85, 255, 153, 0.6); margin-top: 5px;">Instant support from our team</p>
+                    </div>
+                    <div class="contact-item">
+                        <span class="icon" style="color: var(--pixel-yellow);">⏱</span>
+                        <h4>Response Time</h4>
+                        <p>Within 24 hours</p>
+                        <p style="font-size: 0.9rem; color: rgba(85, 255, 153, 0.6); margin-top: 5px;">We aim to respond to all inquiries quickly</p>
+                    </div>
+                    <div class="contact-item">
+                        <span class="icon" style="color: var(--bit-green);">🌐</span>
+                        <h4>Social Media</h4>
+                        <p>Follow us on Twitter, Discord & Facebook</p>
+                        <p style="font-size: 0.9rem; color: rgba(85, 255, 153, 0.6); margin-top: 5px;">Stay updated with latest news and events</p>
+                    </div>
+                    <div class="contact-item">
+                        <span class="icon" style="color: var(--electric-red);">📋</span>
+                        <h4>Help Center</h4>
+                        <p>Visit our FAQ section</p>
+                        <p style="font-size: 0.9rem; color: rgba(85, 255, 153, 0.6); margin-top: 5px;">Find answers to common questions</p>
+                    </div>
+                    <div class="contact-item">
+                        <span class="icon" style="color: var(--neon-blue);">🕐</span>
+                        <h4>Business Hours</h4>
+                        <p>Monday - Sunday: 24/7</p>
+                        <p style="font-size: 0.9rem; color: rgba(85, 255, 153, 0.6); margin-top: 5px;">We're always here to help you!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 60px; padding: 40px; background: var(--crt-gray); border: 3px solid var(--neon-blue); clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px); text-align: center;">
+                <h3 style="font-family: 'Press Start 2P', cursive; font-size: 0.9rem; color: var(--pixel-yellow); margin-bottom: 30px;">💡 BEFORE CONTACTING US</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; text-align: left; max-width: 1000px; margin: 0 auto;">
+                    <div>
+                        <h4 style="font-family: 'Press Start 2P', cursive; font-size: 0.7rem; color: var(--bit-green); margin-bottom: 15px;">📖 CHECK FAQ</h4>
+                        <p style="font-size: 1.1rem; color: rgba(85, 255, 153, 0.8); line-height: 1.8;">
+                            Many common questions are answered in our FAQ section. Check there first for quick solutions!
+                        </p>
+                    </div>
+                    <div>
+                        <h4 style="font-family: 'Press Start 2P', cursive; font-size: 0.7rem; color: var(--bit-green); margin-bottom: 15px;">🔍 HELP CENTER</h4>
+                        <p style="font-size: 1.1rem; color: rgba(85, 255, 153, 0.8); line-height: 1.8;">
+                            Browse our Help Center for detailed guides, tutorials, and troubleshooting information.
+                        </p>
+                    </div>
+                    <div>
+                        <h4 style="font-family: 'Press Start 2P', cursive; font-size: 0.7rem; color: var(--bit-green); margin-bottom: 15px;">💬 LIVE CHAT</h4>
+                        <p style="font-size: 1.1rem; color: rgba(85, 255, 153, 0.8); line-height: 1.8;">
+                            For immediate assistance, use our Live Chat feature. Available 24/7 for instant support!
+                        </p>
+                    </div>
+                </div>
+                <div style="margin-top: 40px;">
+                    <a href="faq.html" class="pixel-btn pixel-btn-secondary" style="margin-right: 15px;">VIEW FAQ</a>
+                    <a href="help.html" class="pixel-btn pixel-btn-primary">HELP CENTER</a>
+                </div>
+            </div>
+
+            <div class="back-to-home">
+                <a href="index.html" class="pixel-btn pixel-btn-primary" style="max-width: 300px; display: block; margin: 0 auto; margin-top: 40px;">BACK TO HOME</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>THERAPY PLACE</h4>
+                    <p style="color: rgba(85, 255, 153, 0.7); font-size: 1rem; line-height: 1.6;">
+                        New Zealand's premier social casino games platform. Play responsibly and enjoy the entertainment!
+                    </p>
+                </div>
+                <div class="footer-section">
+                    <h4>QUICK LINKS</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="games.html">Games</a></li>
+                        <li><a href="store.html">Retro Store</a></li>
+                        <li><a href="tournaments.html">Tournaments</a></li>
+                        <li><a href="leaderboard.html">Leaderboard</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>LEGAL</h4>
+                    <ul class="footer-links">
+                        <li><a href="terms.html">Terms of Service</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="responsible.html">Responsible Gaming</a></li>
+                        <li><a href="help.html">Help & Support</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>SUPPORT</h4>
+                    <ul class="footer-links">
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="help.html">Help Center</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Therapy Place Social Casino Games Platform.</p>
+                <p style="margin-top: 10px;">18+ Only | No Real Money | Play Responsibly</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMobileMenu() {
+            document.getElementById('navMenu').classList.toggle('active');
+        }
+        function toggleDropdown(element) {
+            if (window.innerWidth <= 992) {
+                element.classList.toggle('active');
+            }
+        }
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const successMessage = document.getElementById('successMessage');
+            successMessage.classList.add('show');
+            this.reset();
+            setTimeout(() => {
+                successMessage.classList.remove('show');
+            }, 5000);
+        });
+        document.addEventListener('DOMContentLoaded', () => {
+            document.addEventListener('click', (e) => {
+                const navMenu = document.getElementById('navMenu');
+                const mobileToggle = document.querySelector('.mobile-toggle');
+                if (window.innerWidth <= 992 && !navMenu.contains(e.target) && !mobileToggle.contains(e.target)) {
+                    navMenu.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+

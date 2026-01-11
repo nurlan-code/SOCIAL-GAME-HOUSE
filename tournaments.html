@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tournaments - Therapy Place Social Casino Games Platform</title>
+    <link rel="icon" type="image/png" href="./images/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --electric-red: #ff4d4d;
+            --neon-blue: #00d9ff;
+            --pixel-yellow: #ffdd55;
+            --bit-green: #55ff99;
+            --deep-black: #0a0a0a;
+            --crt-gray: #262626;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'VT323', monospace;
+            background: var(--deep-black);
+            color: var(--bit-green);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15) 1px, transparent 1px, transparent 2px);
+            pointer-events: none;
+            z-index: 10000;
+            opacity: 0.3;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 217, 255, 0.03) 2px, rgba(0, 217, 255, 0.03) 4px),
+                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255, 77, 77, 0.03) 2px, rgba(255, 77, 77, 0.03) 4px);
+            pointer-events: none;
+            z-index: 9999;
+            animation: noise 0.2s infinite;
+        }
+        @keyframes noise {
+            0%, 100% { transform: translate(0, 0); }
+            10% { transform: translate(-1%, -1%); }
+            20% { transform: translate(1%, 1%); }
+            30% { transform: translate(-1%, 1%); }
+            40% { transform: translate(1%, -1%); }
+            50% { transform: translate(-1%, 0); }
+            60% { transform: translate(1%, 0); }
+            70% { transform: translate(0, -1%); }
+            80% { transform: translate(0, 1%); }
+            90% { transform: translate(-1%, -1%); }
+        }
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
+        header {
+            background: var(--crt-gray);
+            border-bottom: 4px solid var(--neon-blue);
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.5);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+        }
+        .navbar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+        .logo {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.2rem;
+            color: var(--pixel-yellow);
+            text-shadow: 0 0 10px var(--pixel-yellow), 2px 2px 0 var(--electric-red), 4px 4px 0 var(--deep-black);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            animation: blink 2s infinite;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            height: 40px;
+            width: auto;
+            object-fit: contain;
+        }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.8; } }
+        .logo span { font-size: 2rem; filter: drop-shadow(0 0 10px var(--pixel-yellow)); }
+        .nav-menu { display: flex; gap: 10px; list-style: none; flex-wrap: wrap; }
+        .nav-item { position: relative; }
+        .nav-link {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.7rem;
+            color: var(--bit-green);
+            text-decoration: none;
+            padding: 10px 15px;
+            display: block;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            background: var(--deep-black);
+            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+        }
+        .nav-link:hover, .nav-link.active {
+            color: var(--neon-blue);
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 15px var(--neon-blue), inset 0 0 15px rgba(0, 217, 255, 0.2);
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--crt-gray);
+            border: 2px solid var(--neon-blue);
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.5);
+            min-width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s;
+            z-index: 1001;
+            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+        }
+        .nav-item:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .dropdown-item {
+            display: block;
+            padding: 12px 20px;
+            color: var(--bit-green);
+            text-decoration: none;
+            font-size: 0.7rem;
+            border-bottom: 1px solid rgba(0, 217, 255, 0.2);
+            transition: all 0.3s;
+        }
+        .dropdown-item:hover {
+            background: rgba(0, 217, 255, 0.2);
+            color: var(--neon-blue);
+            padding-left: 25px;
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
+        .mobile-toggle {
+            display: none;
+            background: var(--deep-black);
+            border: 2px solid var(--neon-blue);
+            color: var(--bit-green);
+            padding: 10px 15px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+        }
+        .section { padding: 60px 0; }
+        .section-title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.5rem;
+            color: var(--pixel-yellow);
+            text-align: center;
+            margin-bottom: 40px;
+            text-shadow: 0 0 15px var(--pixel-yellow), 3px 3px 0 var(--deep-black);
+        }
+        .section-title::before,
+        .section-title::after {
+            content: '▓▓▓';
+            color: var(--neon-blue);
+            margin: 0 20px;
+        }
+        .tournament-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .tournament-card {
+            background: var(--crt-gray);
+            border: 3px solid var(--neon-blue);
+            padding: 30px;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+            transition: all 0.3s;
+            position: relative;
+        }
+        .tournament-card.live {
+            border-color: var(--electric-red);
+            box-shadow: 0 0 30px var(--electric-red);
+            animation: livePulse 2s infinite;
+        }
+        @keyframes livePulse {
+            0%, 100% { box-shadow: 0 0 30px var(--electric-red); }
+            50% { box-shadow: 0 0 50px var(--electric-red), 0 0 70px var(--electric-red); }
+        }
+        .tournament-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 40px var(--neon-blue);
+        }
+        .live-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--electric-red);
+            color: var(--deep-black);
+            padding: 8px 15px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.6rem;
+            clip-path: polygon(0 0, calc(100% - 5px) 0, 100% 5px, 100% 100%, 5px 100%, 0 calc(100% - 5px));
+            animation: blink 1s infinite;
+        }
+        .tournament-title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1rem;
+            color: var(--bit-green);
+            margin-bottom: 15px;
+        }
+        .tournament-info {
+            font-size: 1.1rem;
+            color: rgba(85, 255, 153, 0.7);
+            margin-bottom: 10px;
+            line-height: 1.8;
+        }
+        .tournament-prize {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.9rem;
+            color: var(--pixel-yellow);
+            text-shadow: 0 0 10px var(--pixel-yellow);
+            margin: 20px 0;
+        }
+        .tournament-time {
+            font-size: 1rem;
+            color: var(--neon-blue);
+            margin: 15px 0;
+        }
+        .pixel-btn {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.7rem;
+            padding: 12px 25px;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 15px;
+        }
+        .pixel-btn-primary {
+            background: var(--electric-red);
+            color: var(--deep-black);
+            border: 3px solid var(--pixel-yellow);
+            box-shadow: 0 0 20px var(--electric-red), 4px 4px 0 var(--deep-black);
+        }
+        .pixel-btn-primary:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 0 0 30px var(--electric-red), 6px 6px 0 var(--deep-black);
+        }
+        .pixel-btn-secondary {
+            background: var(--neon-blue);
+            color: var(--deep-black);
+            border: 3px solid var(--bit-green);
+            box-shadow: 0 0 20px var(--neon-blue), 4px 4px 0 var(--deep-black);
+        }
+        .pixel-btn-secondary:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 0 0 30px var(--neon-blue), 6px 6px 0 var(--deep-black);
+        }
+        .back-to-home {
+            text-align: center;
+            margin-top: 40px;
+        }
+        footer {
+            background: var(--crt-gray);
+            border-top: 4px solid var(--neon-blue);
+            padding: 40px 0 20px;
+            margin-top: 60px;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+        .footer-section h4 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.7rem;
+            color: var(--pixel-yellow);
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px var(--pixel-yellow);
+        }
+        .footer-links {
+            list-style: none;
+        }
+        .footer-links a {
+            display: block;
+            color: var(--bit-green);
+            text-decoration: none;
+            padding: 8px 0;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            border-bottom: 1px solid transparent;
+        }
+        .footer-links a:hover {
+            color: var(--neon-blue);
+            padding-left: 10px;
+            text-shadow: 0 0 10px var(--neon-blue);
+            border-bottom-color: var(--neon-blue);
+        }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 2px solid rgba(0, 217, 255, 0.3);
+            color: rgba(85, 255, 153, 0.7);
+            font-size: 0.9rem;
+        }
+        @media (max-width: 992px) {
+            .nav-menu {
+                position: fixed;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background: var(--crt-gray);
+                flex-direction: column;
+                padding: 20px;
+                border-bottom: 4px solid var(--neon-blue);
+                display: none;
+                z-index: 999;
+            }
+            .nav-menu.active { display: flex; }
+            .mobile-toggle { display: block; }
+            .dropdown-menu {
+                position: static;
+                transform: none;
+                opacity: 1;
+                visibility: visible;
+                display: none;
+                margin-top: 10px;
+            }
+            .nav-item.active .dropdown-menu { display: block; }
+        }
+        @media (max-width: 768px) {
+            .section-title { font-size: 1.2rem; }
+            .tournament-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 480px) {
+            .pixel-btn { display: block; width: 100%; margin: 10px 0; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container navbar">
+            <a href="index.html" class="logo">
+                <img src="./images/logo.png" alt="Therapy Place Logo" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+                <span style="display: none;">🎰</span>
+                <span>THERAPY PLACE</span>
+            </a>
+            <button class="mobile-toggle" onclick="toggleMobileMenu()">☰</button>
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item" onclick="toggleDropdown(event, this)">
+                    <a href="games.html" class="nav-link" onclick="if(window.innerWidth <= 992) {event.preventDefault(); toggleDropdown(event, this.parentElement);}">Games ▾</a>
+                    <div class="dropdown-menu">
+                        <a href="slots.html" class="dropdown-item">🎰 Slots</a>
+                        <a href="live-tournaments.html" class="dropdown-item">⚔ Live Tournaments</a>
+                    </div>
+                </li>
+                <li class="nav-item"><a href="store.html" class="nav-link">Retro Store</a></li>
+                <li class="nav-item"><a href="tournaments.html" class="nav-link active">Tournaments</a></li>
+                <li class="nav-item"><a href="leaderboard.html" class="nav-link">Leaderboard</a></li>
+                <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">UPCOMING TOURNAMENTS</h2>
+            <p style="text-align: center; font-size: 1.2rem; color: rgba(85, 255, 153, 0.7); margin-bottom: 40px;">
+                Compete in real-time tournaments and win massive coin prizes!
+            </p>
+
+            <div class="tournament-grid">
+                <div class="tournament-card live">
+                    <div class="live-badge">LIVE NOW</div>
+                    <h3 class="tournament-title">Pixel Battle Royale</h3>
+                    <p class="tournament-info">⚔ Format: Battle Royale</p>
+                    <p class="tournament-info">👥 Players: 124 / 200</p>
+                    <p class="tournament-info">⏱ Duration: 2 hours</p>
+                    <div class="tournament-prize">PRIZE POOL: 1,000,000 COINS</div>
+                    <p class="tournament-time">⏰ Ends in: 01:23:45</p>
+                    <button class="pixel-btn pixel-btn-primary" onclick="joinTournament('Pixel Battle Royale')">JOIN NOW</button>
+                </div>
+
+                <div class="tournament-card">
+                    <h3 class="tournament-title">Arcade Poker Championship</h3>
+                    <p class="tournament-info">🃏 Format: Texas Hold'em</p>
+                    <p class="tournament-info">👥 Max Players: 50</p>
+                    <p class="tournament-info">⏱ Duration: 3 hours</p>
+                    <div class="tournament-prize">PRIZE POOL: 750,000 COINS</div>
+                    <p class="tournament-time">📅 Starts: Jan 15, 2026 at 8:00 PM</p>
+                    <button class="pixel-btn pixel-btn-secondary" onclick="joinTournament('Arcade Poker Championship')">REGISTER</button>
+                </div>
+
+                <div class="tournament-card">
+                    <h3 class="tournament-title">Slot Machine Marathon</h3>
+                    <p class="tournament-info">🎰 Format: Slots Tournament</p>
+                    <p class="tournament-info">👥 Max Players: 100</p>
+                    <p class="tournament-info">⏱ Duration: 4 hours</p>
+                    <div class="tournament-prize">PRIZE POOL: 500,000 COINS</div>
+                    <p class="tournament-time">📅 Starts: Jan 20, 2026 at 6:00 PM</p>
+                    <button class="pixel-btn pixel-btn-secondary" onclick="joinTournament('Slot Machine Marathon')">REGISTER</button>
+                </div>
+
+                <div class="tournament-card">
+                    <h3 class="tournament-title">Retro Blackjack Showdown</h3>
+                    <p class="tournament-info">🃑 Format: Blackjack Tournament</p>
+                    <p class="tournament-info">👥 Max Players: 75</p>
+                    <p class="tournament-info">⏱ Duration: 2.5 hours</p>
+                    <div class="tournament-prize">PRIZE POOL: 600,000 COINS</div>
+                    <p class="tournament-time">📅 Starts: Jan 18, 2026 at 7:00 PM</p>
+                    <button class="pixel-btn pixel-btn-secondary" onclick="joinTournament('Retro Blackjack Showdown')">REGISTER</button>
+                </div>
+
+                <div class="tournament-card">
+                    <h3 class="tournament-title">Weekly Pixel Challenge</h3>
+                    <p class="tournament-info">🎮 Format: Mixed Games</p>
+                    <p class="tournament-info">👥 Max Players: 150</p>
+                    <p class="tournament-info">⏱ Duration: 5 hours</p>
+                    <div class="tournament-prize">PRIZE POOL: 400,000 COINS</div>
+                    <p class="tournament-time">📅 Starts: Every Monday at 12:00 PM</p>
+                    <button class="pixel-btn pixel-btn-secondary" onclick="joinTournament('Weekly Pixel Challenge')">REGISTER</button>
+                </div>
+
+                <div class="tournament-card">
+                    <h3 class="tournament-title">Elite Masters Cup</h3>
+                    <p class="tournament-info">🏆 Format: Invitation Only</p>
+                    <p class="tournament-info">👥 Max Players: 25</p>
+                    <p class="tournament-info">⏱ Duration: 6 hours</p>
+                    <div class="tournament-prize">PRIZE POOL: 2,500,000 COINS</div>
+                    <p class="tournament-time">📅 Starts: Jan 25, 2026 at 9:00 PM</p>
+                    <button class="pixel-btn pixel-btn-secondary" onclick="joinTournament('Elite Masters Cup')">APPLY</button>
+                </div>
+
+                <div class="tournament-card">
+                    <h3 class="tournament-title">Retro Roulette Championship</h3>
+                    <p class="tournament-info">🎲 Format: Roulette Tournament</p>
+                    <p class="tournament-info">👥 Max Players: 60</p>
+                    <p class="tournament-info">⏱ Duration: 2 hours</p>
+                    <div class="tournament-prize">PRIZE POOL: 450,000 COINS</div>
+                    <p class="tournament-time">📅 Starts: Jan 22, 2026 at 5:00 PM</p>
+                    <button class="pixel-btn pixel-btn-secondary" onclick="joinTournament('Retro Roulette Championship')">REGISTER</button>
+                </div>
+
+                <div class="tournament-card">
+                    <h3 class="tournament-title">Pixel Dice Challenge</h3>
+                    <p class="tournament-info">🎯 Format: Dice Games</p>
+                    <p class="tournament-info">👥 Max Players: 80</p>
+                    <p class="tournament-info">⏱ Duration: 1.5 hours</p>
+                    <div class="tournament-prize">PRIZE POOL: 350,000 COINS</div>
+                    <p class="tournament-time">📅 Starts: Jan 19, 2026 at 4:00 PM</p>
+                    <button class="pixel-btn pixel-btn-secondary" onclick="joinTournament('Pixel Dice Challenge')">REGISTER</button>
+                </div>
+
+                <div class="tournament-card">
+                    <h3 class="tournament-title">Neon Night Tournament</h3>
+                    <p class="tournament-info">🌟 Format: Mixed Games</p>
+                    <p class="tournament-info">👥 Max Players: 120</p>
+                    <p class="tournament-info">⏱ Duration: 3.5 hours</p>
+                    <div class="tournament-prize">PRIZE POOL: 650,000 COINS</div>
+                    <p class="tournament-time">📅 Starts: Jan 17, 2026 at 9:00 PM</p>
+                    <button class="pixel-btn pixel-btn-secondary" onclick="joinTournament('Neon Night Tournament')">REGISTER</button>
+                </div>
+
+                <div class="tournament-card">
+                    <h3 class="tournament-title">Weekend Warrior Cup</h3>
+                    <p class="tournament-info">⚔ Format: All Games</p>
+                    <p class="tournament-info">👥 Max Players: 200</p>
+                    <p class="tournament-info">⏱ Duration: 8 hours</p>
+                    <div class="tournament-prize">PRIZE POOL: 1,500,000 COINS</div>
+                    <p class="tournament-time">📅 Starts: Every Saturday at 12:00 PM</p>
+                    <button class="pixel-btn pixel-btn-secondary" onclick="joinTournament('Weekend Warrior Cup')">REGISTER</button>
+                </div>
+
+                <div class="tournament-card">
+                    <h3 class="tournament-title">Arcade Masters League</h3>
+                    <p class="tournament-info">🎮 Format: League System</p>
+                    <p class="tournament-info">👥 Max Players: 50</p>
+                    <p class="tournament-info">⏱ Duration: 1 week</p>
+                    <div class="tournament-prize">PRIZE POOL: 3,000,000 COINS</div>
+                    <p class="tournament-time">📅 Starts: Every Month on 1st</p>
+                    <button class="pixel-btn pixel-btn-secondary" onclick="joinTournament('Arcade Masters League')">REGISTER</button>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 50px; padding: 30px; background: var(--crt-gray); border: 3px solid var(--pixel-yellow); clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);">
+                <h3 style="font-family: 'Press Start 2P', cursive; font-size: 0.9rem; color: var(--pixel-yellow); margin-bottom: 20px;">💡 TOURNAMENT TIPS</h3>
+                <p style="font-size: 1.2rem; color: rgba(85, 255, 153, 0.8); line-height: 1.8; max-width: 800px; margin: 0 auto;">
+                    🏆 Practice regularly to improve your skills before joining tournaments<br>
+                    💰 Check prize pools and entry requirements before registering<br>
+                    ⏰ Join tournaments early to secure your spot<br>
+                    📊 Review leaderboards to see top players' strategies<br>
+                    🎯 Focus on one game type to master it before branching out<br>
+                    💎 Use your virtual coins wisely and participate in daily challenges to build your bankroll
+                </p>
+            </div>
+
+            <div class="back-to-home">
+                <a href="index.html" class="pixel-btn pixel-btn-primary">BACK TO HOME</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>THERAPY PLACE</h4>
+                    <p style="color: rgba(85, 255, 153, 0.7); font-size: 1rem; line-height: 1.6;">
+                        New Zealand's premier social casino games platform. Play responsibly and enjoy the entertainment!
+                    </p>
+                </div>
+                <div class="footer-section">
+                    <h4>QUICK LINKS</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="games.html">Games</a></li>
+                        <li><a href="store.html">Retro Store</a></li>
+                        <li><a href="tournaments.html">Tournaments</a></li>
+                        <li><a href="leaderboard.html">Leaderboard</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>LEGAL</h4>
+                    <ul class="footer-links">
+                        <li><a href="terms.html">Terms of Service</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="responsible.html">Responsible Gaming</a></li>
+                        <li><a href="help.html">Help & Support</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>SUPPORT</h4>
+                    <ul class="footer-links">
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="help.html">Help Center</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div style="border-top: 2px solid rgba(0, 217, 255, 0.3); padding-top: 20px; margin-top: 20px; text-align: center;">
+                <div style="margin-bottom: 15px;">
+                    <a href="https://gamblinghelpline.co.nz/" target="_blank" rel="noopener noreferrer" style="color: var(--bit-green); text-decoration: none; margin: 0 15px; font-size: 1.1rem; transition: all 0.3s;">Gambling Helpline NZ</a>
+                    <a href="https://responsiblegambling.org/" target="_blank" rel="noopener noreferrer" style="color: var(--bit-green); text-decoration: none; margin: 0 15px; font-size: 1.1rem; transition: all 0.3s;">Responsible Gambling</a>
+                    <a href="https://www.health.govt.nz/regulation-legislation/mental-health-and-addiction/gambling-act" target="_blank" rel="noopener noreferrer" style="color: var(--bit-green); text-decoration: none; margin: 0 15px; font-size: 1.1rem; transition: all 0.3s;">NZ Ministry of Health</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Therapy Place Social Casino Games Platform.</p>
+                <p style="margin-top: 10px;">18+ Only | No Real Money | Play Responsibly</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMobileMenu() {
+            document.getElementById('navMenu').classList.toggle('active');
+        }
+        function toggleDropdown(event, element) {
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            if (window.innerWidth <= 992) {
+                document.querySelectorAll('.nav-item').forEach(item => {
+                    if (item !== element) {
+                        item.classList.remove('active');
+                    }
+                });
+                element.classList.toggle('active');
+            }
+        }
+        function joinTournament(name) {
+            alert('Joining tournament: ' + name + '\n\nNote: This is a demo. Tournament registration is simulated.');
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            document.addEventListener('click', (e) => {
+                const navMenu = document.getElementById('navMenu');
+                const mobileToggle = document.querySelector('.mobile-toggle');
+                if (window.innerWidth <= 992 && !navMenu.contains(e.target) && !mobileToggle.contains(e.target)) {
+                    navMenu.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
