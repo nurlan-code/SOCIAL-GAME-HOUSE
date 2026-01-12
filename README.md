@@ -1,6 +1,6 @@
 # 🎰 PixelJackpot - Retro Pixel Arcade Casino
 
-A retro pixel-art online casino platform that combines classic 8-bit arcade aesthetics with modern UI/UX elements. PixelJackpot features neon pixel lights, CRT screen effects, pixel animations, and an authentic arcade gaming experience.
+A retro pixel-art Social casino games platform that combines classic 8-bit arcade aesthetics with modern UI/UX elements. PixelJackpot features neon pixel lights, CRT screen effects, pixel animations, and an authentic arcade gaming experience.
 
 ## ✨ Features
 
